@@ -55,6 +55,7 @@ class Controller extends CI_Controller {
 	function selectSeat(){
 		$this->load->model("modeldb");
 		$passId = $this->modeldb->getNumRow("passenger")+1;
+		echo $passId;
 		$newPass = array (
 			'passID' => $passId,
 			'name'=> $_POST["name"],
@@ -133,7 +134,7 @@ class Controller extends CI_Controller {
 			'emergencyRelation'=> $this->session->userdata('emergencyRelation'),
 			'emergencyPhone'=> $this->session->userdata('emergencyPhone')
 			);
-		$this->modeldb->setNewPass($temp);
+		//$this->modeldb->setNewPass($temp);
 
 		if(!empty($this->session->userdata('departSeat'))){
 				$this->modeldb->setSeat($this->session->userdata('departSeat'),$this->session->userdata('passID'),1);
@@ -151,19 +152,24 @@ class Controller extends CI_Controller {
 			'cwcid'=> $_POST["cwcid"],
 			'cardCountry'=> $_POST["cardCountry"]
 			);
-		$this->modeldb->setNewPay($temp);
+		//$this->modeldb->setNewPay($temp);
 		$transacID = $this->modeldb->getNumRow("transaction")+1;
 		$temp = array(
 			'bookingID'=> $transacID,
-			'bookDate'=> NOW(),
+			'bookDate'=> date("Y-m-d"),
 			'departID'=> $this->session->userdata('departFlight'),
 			'returnID'=> $this->session->userdata('returnFlight'),
 			'passID'=> $this->session->userdata('passID'),
-			'chargeID'=> $this->session->userdata('email')
+			'chargeID'=> $this->session->userdata('additionalFee')
 			);
-		
+		//$this->modeldb->setNewTransac($temp);
 	
-	require (LIB."/fpdf/fpdf.php");
+	//require_once ("../../assets/lib/fpdf/fpdf.php");
+	//$this->load->library('Fpdf');
+	include ('fpdf/fpdf.php');
+
+
+	$this->fpdf->includeFunction();
 	$pdf = new FPDF();
 	$pdf->AddPage();
 	$pdf->SetFont("Arial","B",16);
@@ -207,7 +213,8 @@ class Controller extends CI_Controller {
 	
 
 	function test(){	
-		$this->load->view("test");	
+		//$this->load->view("test");	
+		echo (date("Y-m-d"));
 	}
 		
 	
