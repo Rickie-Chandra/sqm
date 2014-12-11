@@ -1,0 +1,29 @@
+/*!
+ * Bootstrap v3.1.0 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ background-image:url("http://192.168.0.101/o1/assets/img/background.png");
+ */
+h1,h2,h3,h4,h5,h6,a {
+    color: #25383C;
+    font-family: "Georgia", "Times New Roman";
+}
+
+body {
+	color: #25383C;
+	background-image:url("../img/background.png");		
+	}
+
+table {
+	color: #2C3539;
+}
+
+th {
+	color:#FFFFCC;
+	background-color: #585858;
+}
+
+.table-hover tbody tr:hover td {
+    background: #585858;
+    color:#FFFFCC;
+}
