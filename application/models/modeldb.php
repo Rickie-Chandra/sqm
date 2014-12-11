@@ -77,6 +77,16 @@
 			return $query->result();
 		}
 
+		function getAirportDetail($id){
+			$query = $this->db->get_where('airport', array('portID' => $id));
+			return $query->result();
+		}
+
+		function getRouteDetail($id){
+			$query = $this->db->get_where('route', array('routeID' => $id));
+			return $query->result();
+		}
+
 		function setNewPay($newPay){
 			$this->db->insert('payment', $newPay);
 		}

@@ -55,7 +55,6 @@ class Controller extends CI_Controller {
 	function selectSeat(){
 		$this->load->model("modeldb");
 		$passId = $this->modeldb->getNumRow("passenger")+1;
-		echo $passId;
 		$newPass = array (
 			'passID' => $passId,
 			'name'=> $_POST["name"],
@@ -122,6 +121,7 @@ class Controller extends CI_Controller {
 		$this->load->model("modeldb");
 		$this->load->library('session');
 
+		/*Store data to database*/
 		$temp = array (
 			'passID' => $this->session->userdata('passID'),
 			'name'=> $this->session->userdata('name'),
@@ -134,7 +134,7 @@ class Controller extends CI_Controller {
 			'emergencyRelation'=> $this->session->userdata('emergencyRelation'),
 			'emergencyPhone'=> $this->session->userdata('emergencyPhone')
 			);
-		//$this->modeldb->setNewPass($temp);
+		$this->modeldb->setNewPass($temp);
 
 		if(!empty($this->session->userdata('departSeat'))){
 				$this->modeldb->setSeat($this->session->userdata('departSeat'),$this->session->userdata('passID'),1);
@@ -152,7 +152,7 @@ class Controller extends CI_Controller {
 			'cwcid'=> $_POST["cwcid"],
 			'cardCountry'=> $_POST["cardCountry"]
 			);
-		//$this->modeldb->setNewPay($temp);
+		$this->modeldb->setNewPay($temp);
 		$transacID = $this->modeldb->getNumRow("transaction")+1;
 		$temp = array(
 			'bookingID'=> $transacID,
@@ -160,48 +160,106 @@ class Controller extends CI_Controller {
 			'departID'=> $this->session->userdata('departFlight'),
 			'returnID'=> $this->session->userdata('returnFlight'),
 			'passID'=> $this->session->userdata('passID'),
-			'chargeID'=> $this->session->userdata('additionalFee')
+			'chargeID'=> $this->session->userdata('additionalFee'),
+			'payID'=> $this->session->userdata($this->modeldb->getNumRow("payment")+1)
 			);
+		$this->modeldb->setNewTransac($temp);
 
-	include (APPPATH.'libraries/fpdf/fpdf.php');
-	$pdf = new FPDF();
-	$pdf->AddPage();
-	$pdf->SetFont("Arial","B",18);
-	$pdf->Cell(0,10,"E-Ticket",0,2,'C');
-	$pdf->SetFont("Times","",12);
-	$pdf->Cell(50,10,"Passenger ID :",1,0);
-	$pdf->Cell(50,10,$this->session->userdata('passID'),1,1);
-
-	$pdf->Cell(50,10,"Name :",1,0);
-	$pdf->Cell(50,10,$this->session->userdata('name'),1,1);
-
-	$pdf->Cell(50,10,"IC/Passport :",1,0);
-	$pdf->Cell(50,10,$this->session->userdata('icPass'),1,1);
-
-	$pdf->SetFont("Times","",12);
-
-	if(!empty($this->session->userdata('departFlight'))){
-		$pdf->Cell(50,10,"Departure Flight Number :",1,0);
-		$pdf->Cell(50,10,$this->session->userdata('departFlight'),1,1);
-		$temp = $this->modeldb->getFlightDetail($this->session->userdata('departFlight'));
-		$pdf->Cell(50,10,"From :",1,0);
-		$pdf->Cell(50,10,$temp[0]->from,1,0);
-		$pdf->Cell(50,10,"To :",1,0);
-		$pdf->Cell(50,10,$temp[0]->to,1,1);
+		/*Create PDF*/
+		include (APPPATH.'libraries/fpdf/fpdf.php');
+		$pdf_filename = tempnam(APPPATH."temp", "pdf");
+		$pdf = new FPDF();
+		$pdf->AddPage();
+		$pdf->SetFont("Arial","B",18);
+		$pdf->Image(IMG.'logo.png',10,10,-70);
+		$pdf->Ln('10');
+		$pdf->Cell(0,30,"E-Ticket",0,2,'C');
+		$pdf->SetFont("Times","",12);
+		$pdf->Cell(50,10,"Name :",1,0);
+		$pdf->Cell(120,10,$this->session->userdata('name'),1,1);
+		$pdf->Cell(50,10,"IC/Passport :",1,0);
+		$pdf->Cell(120,10,$this->session->userdata('icPass'),1,1);
+		$pdf->Cell(50,10,"Booking ID :",1,0);
+		$pdf->Cell(120,10,$transacID,1,1);
+		$pdf->Cell(50,10,"Passenger ID :",1,0);
+		$pdf->Cell(120,10,$this->session->userdata('passID'),1,1);
+		if(!empty($this->session->userdata('departFlight'))){
+			$pdf->Cell(50,10,"Departure Flight ID :",1,0);
+			$pdf->Cell(120,10,$this->session->userdata('departFlight'),1,1);
 		}
-
-	if(!empty($this->session->userdata('returnFlight'))){
-		$pdf->Cell(50,10,"Return Flight Number :",1,0);
-		$pdf->Cell(50,10,$this->session->userdata('returnFlight'),1,1);
-		$temp = $this->modeldb->getFlightDetail($this->session->userdata('returnFlight'));
-		$pdf->Cell(50,10,"From :",1,0);
-		$pdf->Cell(50,10,$temp[0]->from,1,0);
-		$pdf->Cell(50,10,"To :",1,0);
-		$pdf->Cell(50,10,$temp[0]->to,1,1);
+		if(!empty($this->session->userdata('returnFlight'))){
+			$pdf->Cell(50,10,"Return Flight ID :",1,0);
+			$pdf->Cell(120,10,$this->session->userdata('returnFlight'),1,1);
 		}
+		
+		$pdf->SetFont("Times","",12);
+		if(!empty($this->session->userdata('departFlight'))){
+			$pdf->Ln('10');
+			$flight = $this->modeldb->getFlightDetail($this->session->userdata('departFlight'));
+			$pdf->Cell(0,10,"Departure Flight - ".$flight[0]->flightDate,0,1,'C');
+			$pdf->Cell(50,10,"AIRCRAFT NUMBER",1,0);
+			$pdf->Cell(50,10,"TIME",1,0);
+			$pdf->Cell(70,10,"LOCATION",1,1);
+			$pdf->Cell(50,10,$flight[0]->craftID,1,0);
+			$pdf->Cell(50,10,$flight[0]->departTime,1,0);
+			$route = $this->modeldb->getRouteDetail($flight[0]->routeID);
+			$airport = $this->modeldb->getAirportDetail($route[0]->from);
+			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			$pdf->Cell(50,10,"",1,0);
+			$pdf->Cell(50,10,$flight[0]->arriveTime,1,0);
+			$airport = $this->modeldb->getAirportDetail($route[0]->to);
+			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			}
 
-	//$this->session->sess_destroy();
-	$pdf->output();
+		if(!empty($this->session->userdata('returnFlight'))){
+			$pdf->Ln('10');
+			$pdf->Cell(0,10,"Return Flight - ".$flight[0]->flightDate,0,1,'C');
+			$pdf->Cell(50,10,"AIRCRAFT NUMBER",1,0);
+			$pdf->Cell(50,10,"TIME",1,0);
+			$pdf->Cell(70,10,"LOCATION",1,1);
+			$flight = $this->modeldb->getFlightDetail($this->session->userdata('returnFlight'));
+			$pdf->Cell(50,10,$flight[0]->craftID,1,0);
+			$pdf->Cell(50,10,$flight[0]->departTime,1,0);
+			$route = $this->modeldb->getRouteDetail($flight[0]->routeID);
+			$airport = $this->modeldb->getAirportDetail($route[0]->from);
+			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			$pdf->Cell(50,10,"",1,0);
+			$pdf->Cell(50,10,$flight[0]->arriveTime,1,0);
+			$airport = $this->modeldb->getAirportDetail($route[0]->to);
+			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			}
+
+
+		/*Send to Email*/	
+		$to = $this->session->userdata('email');
+		echo $this->session->userdata('email'); 
+		//$to = "Rickie_Chandra@yahoo.com"; 
+		$from = "no-reply@Group_D.com"; 
+		$subject = "Airline Ticket"; 
+		$message = "Hello ".$this->session->userdata('name')."<br/><br/><p>Please see the attachment.</p>";
+		$separator = md5(time());
+		$eol = PHP_EOL;
+		$filename = "e-ticket for ".$this->session->userdata('name').".pdf";
+		$pdfdoc = $pdf->Output("", "S");
+		$attachment = chunk_split(base64_encode($pdfdoc));
+		$headers  = "From: ".$from.$eol;
+		$headers .= "MIME-Version: 1.0".$eol; 
+		$headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"".$eol.$eol; 
+		$headers .= "Content-Transfer-Encoding: 7bit".$eol;
+		$headers .= "This is a MIME encoded message.".$eol.$eol;
+		$headers .= "--".$separator.$eol;
+		$headers .= "Content-Type: text/html; charset=\"iso-8859-1\"".$eol;
+		$headers .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
+		$headers .= $message.$eol.$eol;
+		$headers .= "--".$separator.$eol;
+		$headers .= "Content-Type: application/octet-stream; name=\"".$filename."\"".$eol; 
+		$headers .= "Content-Transfer-Encoding: base64".$eol;
+		$headers .= "Content-Disposition: attachment".$eol.$eol;
+		$headers .= $attachment.$eol.$eol;
+		$headers .= "--".$separator."--";
+		mail($to, $subject, "", $headers);
+		$this->session->sess_destroy();
+		echo "thank you page. in progress";
 
 	}
 	
