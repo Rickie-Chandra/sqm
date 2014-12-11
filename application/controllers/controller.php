@@ -162,19 +162,13 @@ class Controller extends CI_Controller {
 			'passID'=> $this->session->userdata('passID'),
 			'chargeID'=> $this->session->userdata('additionalFee')
 			);
-		//$this->modeldb->setNewTransac($temp);
-	
-	//require_once ("../../assets/lib/fpdf/fpdf.php");
-	//$this->load->library('Fpdf');
-	include ('fpdf/fpdf.php');
 
-
-	$this->fpdf->includeFunction();
+	include (APPPATH.'libraries/fpdf/fpdf.php');
 	$pdf = new FPDF();
 	$pdf->AddPage();
-	$pdf->SetFont("Arial","B",16);
-	$pdf->Cell(0,10,"E-Ticket",0,1,C);
-
+	$pdf->SetFont("Arial","B",18);
+	$pdf->Cell(0,10,"E-Ticket",0,2,'C');
+	$pdf->SetFont("Times","",12);
 	$pdf->Cell(50,10,"Passenger ID :",1,0);
 	$pdf->Cell(50,10,$this->session->userdata('passID'),1,1);
 
@@ -184,7 +178,7 @@ class Controller extends CI_Controller {
 	$pdf->Cell(50,10,"IC/Passport :",1,0);
 	$pdf->Cell(50,10,$this->session->userdata('icPass'),1,1);
 
-	$pdf->SetFont("Times New Roman",14);
+	$pdf->SetFont("Times","",12);
 
 	if(!empty($this->session->userdata('departFlight'))){
 		$pdf->Cell(50,10,"Departure Flight Number :",1,0);
@@ -206,7 +200,7 @@ class Controller extends CI_Controller {
 		$pdf->Cell(50,10,$temp[0]->to,1,1);
 		}
 
-	$this->session->sess_destroy();
+	//$this->session->sess_destroy();
 	$pdf->output();
 
 	}
