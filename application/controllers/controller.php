@@ -174,7 +174,7 @@ class Controller extends CI_Controller {
 			'returnID'=> $this->session->userdata('returnFlight'),
 			'passID'=> $this->session->userdata('passID'),
 			'chargeID'=> $this->session->userdata('additionalFee'),
-			'payID'=> $this->session->userdata($this->modeldb->getLastID("payment","payID")[0]->payID)
+			'payID'=> $payID
 			);
 		$this->modeldb->setNewTransac($temp);
 
