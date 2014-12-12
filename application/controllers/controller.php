@@ -54,9 +54,13 @@ class Controller extends CI_Controller {
 	*/	
 	function selectSeat(){
 		$this->load->model("modeldb");
-		$passId = $this->modeldb->getNumRow("passenger")+1;
+		if(!empty($this->modeldb->getLastID("passenger","passID")[0])){
+			$passID = $this->modeldb->getLastID("passenger","passID")[0]->passID+1;
+		}else{
+			$passID = 1;
+		}
 		$newPass = array (
-			'passID' => $passId,
+			'passID' => $passID,
 			'name'=> $_POST["name"],
 			'DOB'=> $_POST["DOB"],
 			'icPass'=> $_POST["icPass"],
@@ -93,11 +97,9 @@ class Controller extends CI_Controller {
 		$this->load->library('session');
 			if(isset($_POST["departSeat"]) || !empty($_POST["departSeat"])){
 				$this->session->set_userdata('departSeat',$_POST["departSeat"]);
-				//$this->modeldb->setSeat($_POST["departSeat"],$this->session->userdata('passID'),1);
 			}
 			if(isset($_POST["returnSeat"]) || !empty($_POST["returnSeat"])){
 				$this->session->set_userdata('returnSeat',$_POST["returnSeat"]);
-				//$this->modeldb->setSeat($_POST["returnSeat"],$this->session->userdata('passID'),2);
 			}
 
 			if(!empty($this->session->userdata('departFlight'))){
@@ -144,7 +146,14 @@ class Controller extends CI_Controller {
 				$this->modeldb->setSeat($this->session->userdata('returnSeat'),$this->session->userdata('passID'),2);
 			}
 
+		if(!empty($this->modeldb->getLastID("transaction","bookingID")[0])){
+			$payID = $this->modeldb->getLastID("transaction","bookingID")[0]->bookingID+1;
+		}else{
+			$payID = 1;
+		}
+
 		$temp = array(
+			'payID'=>$payID,
 			'cardType'=> $_POST["cardType"],
 			'cardNum'=> $_POST["cardNum"],
 			'cardHold'=> $_POST["cardHold"],
@@ -153,7 +162,11 @@ class Controller extends CI_Controller {
 			'cardCountry'=> $_POST["cardCountry"]
 			);
 		$this->modeldb->setNewPay($temp);
-		$transacID = $this->modeldb->getNumRow("transaction")+1;
+		if(!empty($this->modeldb->getLastID("transaction","bookingID")[0])){
+			$transacID = $this->modeldb->getLastID("transaction","bookingID")[0]->bookingID+1;
+		}else{
+			$transacID = 1;
+		}
 		$temp = array(
 			'bookingID'=> $transacID,
 			'bookDate'=> date("Y-m-d"),
@@ -161,7 +174,7 @@ class Controller extends CI_Controller {
 			'returnID'=> $this->session->userdata('returnFlight'),
 			'passID'=> $this->session->userdata('passID'),
 			'chargeID'=> $this->session->userdata('additionalFee'),
-			'payID'=> $this->session->userdata($this->modeldb->getNumRow("payment")+1)
+			'payID'=> $this->session->userdata($this->modeldb->getLastID("payment","payID")[0]->payID)
 			);
 		$this->modeldb->setNewTransac($temp);
 
@@ -230,10 +243,8 @@ class Controller extends CI_Controller {
 			}
 
 
-		/*Send to Email*/	
+		/*Send to Email	*/
 		$to = $this->session->userdata('email');
-		echo $this->session->userdata('email'); 
-		//$to = "Rickie_Chandra@yahoo.com"; 
 		$from = "no-reply@Group_D.com"; 
 		$subject = "Airline Ticket"; 
 		$message = "Hello ".$this->session->userdata('name')."<br/><br/><p>Please see the attachment.</p>";
@@ -259,14 +270,33 @@ class Controller extends CI_Controller {
 		$headers .= "--".$separator."--";
 		mail($to, $subject, "", $headers);
 		$this->session->sess_destroy();
-		echo "thank you page. in progress";
 
+	}
+
+	function retrieve(){
+		$this->load->library('session');
+		$this->session->sess_destroy();
+		$this->load->model("modeldb");
+		$data['transac']=$this->modeldb->getTransacDetail($_POST['bookingID']);
+		if(!empty($data['transac'])){
+			$data['departSum']=$this->modeldb->getFlightDetail($data['transac'][0]->departID);
+			$data['returnSum']=$this->modeldb->getFlightDetail($data['transac'][0]->returnID);
+			$data['additionalFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->chargeID);
+			$this->load->view("viewRetrieve",$data);
+		}else{
+		echo '<script language="javascript">';
+		echo 'alert("Wrong Booking ID")';	
+		echo '</script>';
+		}
+		//header('location: '.URL);
 	}
 	
 
 	function test(){	
 		//$this->load->view("test");	
 		echo (date("Y-m-d"));
+		$this->load->model("modeldb");
+		echo $this->modeldb->getLastID("payment","payID")[0]->payID;
 	}
 		
 	

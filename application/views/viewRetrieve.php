@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Payment</title>
+	<title>Retrieve Ticket</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php include('css.php');?>
 
 </head>
 <body>
-<ul class="nav nav-tabs">
-  <li role="presentation"><a>Flight</a></li>
-  <li role="presentation"><a>Passenger Profile</a></li>
-  <li role="presentation"><a>Select Seat</a></li>
-  <li role="presentation" class="active"><a>Payment</a></li>
-</ul>
+<?php include('menu.php');?>
 
 <center>
+<br /><br />
+
 <div class="container">
-  <h3><b>Summary</b></h3><br/>
+<h3><b>Your Ticket</b></h3><br/>
   <?php
-  $sum=0;
   if(isset($departSum) && !empty($departSum)){
     echo "<h4>Departure</h4>";
     echo "<table class='table table-hover table-color'>";
@@ -32,7 +28,6 @@
     echo "<td style='width:10%'>".$departSum[0]->to."</td>";
     echo "<td style='width:15%'>".$departSum[0]->fee."</td>";
     echo "</table>";
-    $sum += $departSum[0]->fee;
   }
   if(isset($returnSum) && !empty($returnSum)){
     echo "<h4>Return</h4>";
@@ -47,7 +42,6 @@
     echo "<td style='width:10%'>".$returnSum[0]->to."</td>";
     echo "<td style='width:15%'>".$returnSum[0]->fee."</td>";
     echo "</table>";
-    $sum += $returnSum[0]->fee;
   }
   if(isset($additionalFee) && !empty($additionalFee)){
     echo "<h4>Additional Cost</h4>";
@@ -59,52 +53,18 @@
     echo "<td style='width:40%'>".$additionalFee[0]->description."</td>";
     echo "<td style='width:15%'>".$additionalFee[0]->fee."</td></tr>";
     echo "</table>";
-    $sum += $additionalFee[0]->fee;
   }
   ?>
-  <br /><br />
-  <table class='table table-hover table-color'>
-  <tr><th><center><b><i>Total amount you need to pay is: <?php echo($sum);?></i></b></center></th></table>
-  <br />
 </div>
-
-
-<div class="container">
-<form name="payment" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/ticket');?>">
-<h3><b>Payment</b></h3>
-<table class='table table-hover table-color'>
-<tr><td>Card Type</td>
-<td><input class="form-control" list="relation" placeholder="Click Here" name="cardType"></input></td></tr>
-	<datalist id="relation">
-		<option value='VISA'>
-		<option value='Master'>
-		<option value='Paypal'>
-	</datalist>
-<tr><td>Card Number</td>
-<td><input class="form-control" type="text" placeholder="Card Number" name="cardNum"></input></td></tr>
-<tr><td>Card Holder Name</td>
-<td><input class="form-control" type="text" placeholder="Card Holder Name" name="cardHold"></input></td></tr>
-<tr><td>Expiration Date</td>
-<td><input class="form-control"  type="date" placeholder="Expiration Date" name="expDate"></input></td></tr>
-<tr><td>CW/CID Number</td>
-<td><input class="form-control" type="text" placeholder="CW/CID Number" name="cwcid"></input></td></tr>
-<tr><td>Card Issuing Country</td>
-<td><input class="form-control" type="text" placeholder="Card Issuing Country" name="cardCountry"></input></td></tr>
-</table>
-<button class="btn btn-lg btn-primary btn-block" type="button" onclick="check(payment)">Send</button>
-</form>
-
-
-</div>
-
 </center>
 
 </body>
 <?php include('js.php');?>
+<?php //include("footer.php");?>
+
 <script>
         function check(form) {
-            if (form.cardType.value == "" || form.cardNum.value == "" || form.cardHold.value == "" 
-			|| form.expDate.value == "" || form.cwcid.value == "" || form.cardCountry.value == "")
+            if ((form.to.value == "" || form.from.value == "" || form.departDate.value == ""))
                 {
                     alert("Please fill all information neeeded");
                 }
@@ -112,6 +72,5 @@
                     form.submit();
                 }
         }
-
 </script>
 </html>

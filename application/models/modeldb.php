@@ -28,9 +28,12 @@
 			return $data[0]['capacity'];
 		}
 		
-		function getNumRow($table){
-			$query = $this->db->count_all($table);
-    		return $query; 
+		function getLastID($table,$col){
+			$this->db->select($col);
+			$this->db->order_by($col,'desc');
+			$this->db->from($table);
+			$query=$this->db->get();
+    		return $query->result(); 
 		}
 		
 		function setNewPass($newPass){
@@ -84,6 +87,11 @@
 
 		function getRouteDetail($id){
 			$query = $this->db->get_where('route', array('routeID' => $id));
+			return $query->result();
+		}
+
+		function getTransacDetail($id){
+			$query = $this->db->get_where('transaction', array('bookingID' => $id));
 			return $query->result();
 		}
 
