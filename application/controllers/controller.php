@@ -245,8 +245,8 @@ class Controller extends CI_Controller {
 
 		/*Send to Email	*/
 		$to = $this->session->userdata('email');
-		$from = "no-reply@Group_D.com"; 
-		$subject = "Airline Ticket"; 
+		$from = "no-reply@UNMC_Airline.com"; 
+		$subject = "UNMC Airline E-Ticket"; 
 		$message = "Hello ".$this->session->userdata('name')."<br/><br/><p>Please see the attachment.</p>";
 		$separator = md5(time());
 		$eol = PHP_EOL;
@@ -270,6 +270,7 @@ class Controller extends CI_Controller {
 		$headers .= "--".$separator."--";
 		mail($to, $subject, "", $headers);
 		$this->session->sess_destroy();
+		$this->load->view("viewThanks");
 
 	}
 
@@ -287,16 +288,13 @@ class Controller extends CI_Controller {
 		echo '<script language="javascript">';
 		echo 'alert("Wrong Booking ID")';	
 		echo '</script>';
+		header( "refresh:5;url=".URL);
 		}
-		//header('location: '.URL);
 	}
 	
 
 	function test(){	
-		//$this->load->view("test");	
-		echo (date("Y-m-d"));
-		$this->load->model("modeldb");
-		echo $this->modeldb->getLastID("payment","payID")[0]->payID;
+		$this->load->view("viewThanks");
 	}
 		
 	

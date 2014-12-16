@@ -104,7 +104,6 @@
 </body>
 <?php include('js.php');?>
 <script type="text/javascript"> 
-<?php /* Delete this line to uncomment your jquery
 $(function(){ 
    $('.check input').click(function(){// 클릭시 
       $('.check input').attr("checkide",false); //모든 input을 체크해제 
@@ -117,6 +116,5 @@ $(function(){
    }); 
 }); 
 //]]> 
-Delete this line to uncomment your jquery*/?>
 </script>
 </html>

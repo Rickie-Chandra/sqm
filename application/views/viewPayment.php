@@ -10,10 +10,6 @@
 <?php include('menu.php');?>
 
 <center>
-
-
-
-
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation"><a>Passenger Profile</a></li>
