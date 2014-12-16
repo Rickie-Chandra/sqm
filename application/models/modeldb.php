@@ -95,12 +95,23 @@
 			return $query->result();
 		}
 
+		function getPassDetail($id){
+			$query = $this->db->get_where('passenger', array('passID' => $id));
+			return $query->result();
+		}
+
 		function setNewPay($newPay){
 			$this->db->insert('payment', $newPay);
 		}
 
 		function setNewTransac($newTransac){
 			$this->db->insert('transaction', $newTransac);
+		}
+
+		function cancelTicket($bookingID,$passID,$payID){
+			$this->db->delete('transaction', array('bookingID' => $bookingID)); 
+			$this->db->delete('passenger', array('passID' => $passID)); 
+			$this->db->delete('payment', array('payID' => $payID)); 
 		}
 	}
 ?>

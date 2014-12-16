@@ -1,9 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Controller extends CI_Controller {
-	/*
-	It is responsible to load view of home page and list of airport from database.Responsible to load the view of home page and the list of airport from database.
-	*/
+	
+	//It is responsible to load view of home page and list of airport from database.Responsible to load the view of home page and the list of airport from database.
 	public function index(){
 		$data['title'] = "Home";
 		$this->load->library('session');
@@ -13,9 +12,7 @@ class Controller extends CI_Controller {
 		$this->load->view("viewHome", $data);
 	}
 
-	/*
-	It is responsible to load view of search page and list of possible flight from database according to user’s inputs.
-	*/
+	//It is responsible to load view of search page and list of possible flight from database according to user’s inputs.
 	function searchFlight(){
 		$departDate = $_POST["departDate"];
 		$from = $_POST["from"];
@@ -35,9 +32,7 @@ class Controller extends CI_Controller {
 		}
 	}
 	
-	/*
-	It is responsible to load view of personal details page, additional cost option from database and store the chosen flight into session.
-	*/
+	//It is responsible to load view of personal details page, additional cost option from database and store the chosen flight into session.
 	function personalDetails(){
 		$this->load->library('session');
 		$this->session->set_userdata('departFlight',$_POST["departFlight"]);
@@ -49,9 +44,7 @@ class Controller extends CI_Controller {
 		$this->load->view("viewPerDetail",$data);
 	}
 
-	/*
-	It is responsible to get some information to find un-selected seat, load view of select seat page, store personal details and additional cost (if any) to session.	
-	*/	
+	//It is responsible to get some information to find un-selected seat, load view of select seat page, store personal details and additional cost (if any) to session.	
 	function selectSeat(){
 		$this->load->model("modeldb");
 		if(!empty($this->modeldb->getLastID("passenger","passID")[0])){
@@ -93,9 +86,7 @@ class Controller extends CI_Controller {
 		$this->load->view("viewSeat",$data);		
 	}
 
-	/*
-	It is responsible to store the selected seat into session, get some information to for summary and load view of payment page.
-	*/
+	//It is responsible to store the selected seat into session, get some information to for summary and load view of payment page.
 	function payment(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
@@ -124,9 +115,7 @@ class Controller extends CI_Controller {
 		$this->load->view("viewPayment",$data);	
 	}
 	
-	/*
-	It is responsible to store all session’s data into database, create a ticket and destroy the session.
-	*/	
+	//It is responsible to store all session’s data into database, create a ticket and destroy the session.
 	function ticket(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
@@ -144,7 +133,7 @@ class Controller extends CI_Controller {
 			'emergencyRelation'=> $this->session->userdata('emergencyRelation'),
 			'emergencyPhone'=> $this->session->userdata('emergencyPhone')
 			);
-		//$this->modeldb->setNewPass($temp);
+		$this->modeldb->setNewPass($temp);
 
 		if(!empty($this->session->userdata('departSeat'))){
 				$this->modeldb->setSeat($this->session->userdata('departSeat'),$this->session->userdata('passID'),1);
@@ -169,7 +158,7 @@ class Controller extends CI_Controller {
 			'cwcid'=> $_POST["cwcid"],
 			'cardCountry'=> $_POST["cardCountry"]
 			);
-		//$this->modeldb->setNewPay($temp);
+		$this->modeldb->setNewPay($temp);
 		if(!empty($this->modeldb->getLastID("transaction","bookingID")[0])){
 			$transacID = $this->modeldb->getLastID("transaction","bookingID")[0]->bookingID+1;
 		}else{
@@ -185,9 +174,9 @@ class Controller extends CI_Controller {
 			'returnAddFeeID'=> $this->session->userdata('returnAddFee'),
 			'payID'=> $payID
 			);
-		//$this->modeldb->setNewTransac($temp);
+		$this->modeldb->setNewTransac($temp);
 
-		/*Create PDF*/
+		//Create PDF
 		include (APPPATH.'libraries/fpdf/fpdf.php');
 		$pdf_filename = tempnam(APPPATH."temp", "pdf");
 		$pdf = new FPDF();
@@ -258,10 +247,12 @@ class Controller extends CI_Controller {
 				$pdf->Cell(170,10,"Add on: ".$this->modeldb->getAddFeeDetail($this->session->userdata('returnAddFee'))[0]->description,1,1);
 			}
 		}
-			$pdf->output();
+		$pdf->output();
+		//$pdf->Output($filename,'F');
+		echo '<a href="quote.png" target="_blank">View the image</a>';
 
 
-		/*Send to Email	*/
+		//Send to customer's Email
 		$to = $this->session->userdata('email');
 		echo $to."<br/>";
 		$from = "no-reply@UNMC.com"; 
@@ -314,12 +305,37 @@ class Controller extends CI_Controller {
 			$data['returnSum']=$this->modeldb->getFlightDetail($data['transac'][0]->returnID);
 			$data['departAddFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->departAddFeeID);
 			$data['returnAddFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->returnAddFeeID);
+			$data['passName']=$this->modeldb->getPassDetail($data['transac'][0]->passID)[0]->name;
+			$data['bookingID']=$_POST['bookingID'];
 			$this->load->view("viewRetrieve",$data);
 		}else{
 		header("refresh:1;url=".URL);
 		echo '<script language="javascript">';
 		echo 'alert("Wrong Booking ID")';	
 		echo '</script>';
+		}
+	}
+
+	function cancel(){
+		$this->load->library('session');
+		$this->session->sess_destroy();
+		$this->load->model("modeldb");
+		if(strlen($_POST["icPass"])>3){
+			$data['transac']=$this->modeldb->getTransacDetail($_POST['bookingID']);
+			if($this->modeldb->getPassDetail($data['transac'][0]->passID)[0]->icPass==$_POST["icPass"]){
+				$this->modeldb->cancelTicket($_POST['bookingID'], $data['transac'][0]->passID, $data['transac'][0]->payID);
+			header("refresh:1;url=".URL);
+			echo '<script language="javascript">';
+			echo 'alert("Cancelation Success")';	
+			echo '</script>';
+			}
+
+		}else{
+			header("refresh:1;url=".URL);
+			echo '<script language="javascript">';
+			echo 'alert("Wrong IC/Passport Number")';	
+			echo '</script>';
+
 		}
 	}
 	

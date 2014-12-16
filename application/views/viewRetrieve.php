@@ -13,8 +13,10 @@
 
 <div class="content"> 
 <div class="container">
-<h1><b>Ticket Information</b></h1><br/>
-  <?php
+<h2><b>Ticket Information</b></h2><br/>
+<h3>Name: <?php echo $passName;?></h3>
+<?php
+
   if(isset($departSum) && !empty($departSum)){
     echo "<h4>Departure</h4>";
     echo "<table class='table table-hover table-color'>";
@@ -44,7 +46,7 @@
     echo "</table>";
   }
   if(isset($departAddFee) && !empty($departAddFee)){
-    echo "<h4>Additional Cost</h4>";
+    echo "<h4>Departure Add-on</h4>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th><th>Fee</th>
           </tr>";
@@ -55,7 +57,7 @@
     echo "</table>";
   }
   if(isset($returnAddFee) && !empty($returnAddFee)){
-    echo "<h4>Additional Cost</h4>";
+    echo "<h4>Rerturn Add-on</h4>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th><th>Fee</th>
           </tr>";
@@ -66,22 +68,24 @@
     echo "</table>";
   }
   ?>
+<button class="btn btn-danger" type="button" onclick="cancelTicket(data)">Cancel Ticket</button><br/><br/>
 </div>
 </center>
+<form name="data" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/cancel');?>">
+<input type="hidden" id="bookingID" name="bookingID" value=<?php echo $bookingID;?>>
+<input type="hidden" name="icPass" name="icPass" value="">
+</form>
 </div>
 </body>
 <?php include('js.php');?>
-<?php //include("footer.php");?>
-
-<script>
-        function check(form) {
-            if ((form.to.value == "" || form.from.value == "" || form.departDate.value == ""))
-                {
-                    alert("Please fill all information neeeded");
-                }
-                else {
-                    form.submit();
-                }
-        }
+<script type="text/javascript">
+function cancelTicket(form) {
+    var icPass = prompt("Please enter your IC/Passport Number for cancelation");
+    
+    if (icPass != null) {
+      form.icPass.value=icPass;
+      form.submit();
+    }
+}
 </script>
 </html>
