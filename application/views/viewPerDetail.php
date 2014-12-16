@@ -25,7 +25,7 @@
 <div class="content"> 
 <div class="container">
 <form name="personal" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/selectSeat');?>">
-<h1><b>Personal Detail</b></h1>
+<h2><b>Personal Detail</b></h2>
 <table class='table table-hover table-color'>
 <tr><td>Name</td>
 <td><input class="form-control" type="text" placeholder="e.g. Leonardo Thecaprio" name="name"></input></td></tr>
@@ -56,7 +56,7 @@
 <tr><td>Phone</td>
 <td><input class="form-control" type="text" placeholder="e.g. +620113687265" name="emergencyPhone"></input></td></tr>
 </table>
-<h3>Additional Cost</h3>
+<h3>Depart Additional Cost</h3>
 <table class='table table-hover table-color'>
 <tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
 <?php 
@@ -64,7 +64,19 @@
       echo "<tr><td>".$row->chargeID."</td>";
       echo "<td>".$row->title."</td>";
       echo "<td>".$row->description."</td>";
-      echo "<td><input type='radio' name='additionalFee' value='".$row->chargeID."'> ".$row->fee."</td></tr>";
+      echo "<td><input type='radio' name='departAddFee' value='".$row->chargeID."'> ".$row->fee."</td></tr>";
+    }
+?>
+</table>
+<h3>Return Additional Cost</h3>
+<table class='table table-hover table-color'>
+<tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
+<?php 
+    foreach ($result as $index => $row){
+      echo "<tr><td>".$row->chargeID."</td>";
+      echo "<td>".$row->title."</td>";
+      echo "<td>".$row->description."</td>";
+      echo "<td><input type='radio' name='returnAddFee' value='".$row->chargeID."'> ".$row->fee."</td></tr>";
     }
 ?>
 </table>

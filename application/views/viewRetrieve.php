@@ -43,15 +43,26 @@
     echo "<td style='width:15%'>".$returnSum[0]->fee."</td>";
     echo "</table>";
   }
-  if(isset($additionalFee) && !empty($additionalFee)){
+  if(isset($departAddFee) && !empty($departAddFee)){
     echo "<h4>Additional Cost</h4>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th><th>Fee</th>
           </tr>";
-    echo "<tr><td style='width: 20%'>".$additionalFee[0]->chargeID."</td>";
-    echo "<td style='width:25%''>".$additionalFee[0]->title."</td>";
-    echo "<td style='width:40%'>".$additionalFee[0]->description."</td>";
-    echo "<td style='width:15%'>".$additionalFee[0]->fee."</td></tr>";
+    echo "<tr><td style='width: 20%'>".$departAddFee[0]->chargeID."</td>";
+    echo "<td style='width:25%''>".$departAddFee[0]->title."</td>";
+    echo "<td style='width:40%'>".$departAddFee[0]->description."</td>";
+    echo "<td style='width:15%'>".$departAddFee[0]->fee."</td></tr>";
+    echo "</table>";
+  }
+  if(isset($returnAddFee) && !empty($returnAddFee)){
+    echo "<h4>Additional Cost</h4>";
+    echo "<table class='table table-hover table-color'>";
+    echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th><th>Fee</th>
+          </tr>";
+    echo "<tr><td style='width: 20%'>".$returnAddFee[0]->chargeID."</td>";
+    echo "<td style='width:25%''>".$returnAddFee[0]->title."</td>";
+    echo "<td style='width:40%'>".$returnAddFee[0]->description."</td>";
+    echo "<td style='width:15%'>".$returnAddFee[0]->fee."</td></tr>";
     echo "</table>";
   }
   ?>

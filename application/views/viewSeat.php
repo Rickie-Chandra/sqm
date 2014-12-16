@@ -44,14 +44,14 @@
 			$seat = $departSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'>".$i."</label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'>".$i."</label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'>".$i."</label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'>".$i."</label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -74,14 +74,14 @@
 			$seat = $returnSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'>".$i."</label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'>".$i."</label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'>".$i."</label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'>".$i."</label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";

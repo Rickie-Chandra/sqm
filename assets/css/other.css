@@ -70,11 +70,11 @@ div.content {
 }
 
 
-.ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
+/*.ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
 .hidden {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;display:block} 
 .blind{width:0;height:0;font-size:0;line-height:0;text-indent:-9999px;overflow:hidden;visibility:hidden} 
 .clearfix:after {content:"";display:block;clear:both} 
 .check label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
 .check label.on{background:red} /* change to red when click */ 
-.check label input{position:absolute;top:-999px;left:-999px}  /* delete thi line to see radio button */ 
+/*.check label input{position:absolute;top:-999px;left:-999px}   delete thi line to see radio button */ 
   

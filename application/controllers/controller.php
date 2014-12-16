@@ -73,8 +73,12 @@ class Controller extends CI_Controller {
 			);
 		$this->load->library('session');
 		$this->session->set_userdata($newPass);
-		if(isset($_POST["additionalFee"]) || !empty($_POST["additionalFee"])){
-			$this->session->set_userdata('additionalFee',$_POST["additionalFee"]);
+		if(isset($_POST["departAddFee"]) || !empty($_POST["departAddFee"])){
+			$this->session->set_userdata('departAddFee',$_POST["departAddFee"]);
+		}
+
+		if(isset($_POST["returnAddFee"]) || !empty($_POST["returnAddFee"])){
+			$this->session->set_userdata('returnAddFee',$_POST["returnAddFee"]);
 		}
 		
 		if(!empty($this->session->userdata('departFlight'))){
@@ -105,12 +109,16 @@ class Controller extends CI_Controller {
 			if(!empty($this->session->userdata('departFlight'))){
 				$data['departSum']=$this->modeldb->getFlightDetail($this->session->userdata('departFlight'));
 			}
-			if(!empty($this->session->userdata('returnSeat'))){
+			if(!empty($this->session->userdata('returnFlight'))){
 				$data['returnSum']=$this->modeldb->getFlightDetail($this->session->userdata('returnFlight'));
 			}
 
-			if(!empty($this->session->userdata('additionalFee'))){
-				$data['additionalFee']=$this->modeldb->getAddFeeDetail($this->session->userdata('additionalFee'));
+			if(!empty($this->session->userdata('departAddFee'))){
+				$data['departAddFee']=$this->modeldb->getAddFeeDetail($this->session->userdata('departAddFee'));
+			}
+
+			if(!empty($this->session->userdata('returnAddFee'))){
+				$data['returnAddFee']=$this->modeldb->getAddFeeDetail($this->session->userdata('returnAddFee'));
 			}
 			
 		$this->load->view("viewPayment",$data);	
@@ -136,7 +144,7 @@ class Controller extends CI_Controller {
 			'emergencyRelation'=> $this->session->userdata('emergencyRelation'),
 			'emergencyPhone'=> $this->session->userdata('emergencyPhone')
 			);
-		$this->modeldb->setNewPass($temp);
+		//$this->modeldb->setNewPass($temp);
 
 		if(!empty($this->session->userdata('departSeat'))){
 				$this->modeldb->setSeat($this->session->userdata('departSeat'),$this->session->userdata('passID'),1);
@@ -161,7 +169,7 @@ class Controller extends CI_Controller {
 			'cwcid'=> $_POST["cwcid"],
 			'cardCountry'=> $_POST["cardCountry"]
 			);
-		$this->modeldb->setNewPay($temp);
+		//$this->modeldb->setNewPay($temp);
 		if(!empty($this->modeldb->getLastID("transaction","bookingID")[0])){
 			$transacID = $this->modeldb->getLastID("transaction","bookingID")[0]->bookingID+1;
 		}else{
@@ -173,10 +181,11 @@ class Controller extends CI_Controller {
 			'departID'=> $this->session->userdata('departFlight'),
 			'returnID'=> $this->session->userdata('returnFlight'),
 			'passID'=> $this->session->userdata('passID'),
-			'chargeID'=> $this->session->userdata('additionalFee'),
+			'departAddFeeID'=> $this->session->userdata('departAddFee'),
+			'returnAddFeeID'=> $this->session->userdata('returnAddFee'),
 			'payID'=> $payID
 			);
-		$this->modeldb->setNewTransac($temp);
+		//$this->modeldb->setNewTransac($temp);
 
 		/*Create PDF*/
 		include (APPPATH.'libraries/fpdf/fpdf.php');
@@ -218,11 +227,15 @@ class Controller extends CI_Controller {
 			$route = $this->modeldb->getRouteDetail($flight[0]->routeID);
 			$airport = $this->modeldb->getAirportDetail($route[0]->from);
 			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
-			$pdf->Cell(50,10,"",1,0);
+			$pdf->Cell(50,10,"Seat: ".$this->session->userdata('departSeat'),1,0);
 			$pdf->Cell(50,10,$flight[0]->arriveTime,1,0);
 			$airport = $this->modeldb->getAirportDetail($route[0]->to);
 			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			if(!empty($this->session->userdata('departAddFee'))){
+				$pdf->Ln('5');
+				$pdf->Cell(170,10,"Add on: ".$this->modeldb->getAddFeeDetail($this->session->userdata('departAddFee'))[0]->description,1,1);
 			}
+		}
 
 		if(!empty($this->session->userdata('returnFlight'))){
 			$pdf->Ln('10');
@@ -236,23 +249,30 @@ class Controller extends CI_Controller {
 			$route = $this->modeldb->getRouteDetail($flight[0]->routeID);
 			$airport = $this->modeldb->getAirportDetail($route[0]->from);
 			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
-			$pdf->Cell(50,10,"",1,0);
+			$pdf->Cell(50,10,"Seat: ".$this->session->userdata('returnSeat'),1,0);
 			$pdf->Cell(50,10,$flight[0]->arriveTime,1,0);
 			$airport = $this->modeldb->getAirportDetail($route[0]->to);
 			$pdf->Cell(70,10,$airport[0]->name." - ".$airport[0]->country,1,1);
+			if(!empty($this->session->userdata('returnAddFee'))){
+				$pdf->Ln('5');
+				$pdf->Cell(170,10,"Add on: ".$this->modeldb->getAddFeeDetail($this->session->userdata('returnAddFee'))[0]->description,1,1);
 			}
+		}
+			$pdf->output();
 
 
 		/*Send to Email	*/
 		$to = $this->session->userdata('email');
-		$from = "no-reply@UNMC_Airline.com"; 
+		echo $to."<br/>";
+		$from = "no-reply@UNMC.com"; 
 		$subject = "UNMC Airline E-Ticket"; 
-		$message = "Hello ".$this->session->userdata('name')."<br/><br/><p>Please see the attachment.</p>";
+		$message = "Hello Mr/Ms <br/><p>Please see the attachment.</p>";
 		$separator = md5(time());
 		$eol = PHP_EOL;
 		$filename = "e-ticket for ".$this->session->userdata('name').".pdf";
 		$pdfdoc = $pdf->Output("", "S");
 		$attachment = chunk_split(base64_encode($pdfdoc));
+		/*
 		$headers  = "From: ".$from.$eol;
 		$headers .= "MIME-Version: 1.0".$eol; 
 		$headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"".$eol.$eol; 
@@ -267,10 +287,20 @@ class Controller extends CI_Controller {
 		$headers .= "Content-Transfer-Encoding: base64".$eol;
 		$headers .= "Content-Disposition: attachment".$eol.$eol;
 		$headers .= $attachment.$eol.$eol;
-		$headers .= "--".$separator."--";
-		mail($to, $subject, "", $headers);
-		$this->session->sess_destroy();
-		$this->load->view("viewThanks");
+		$headers .= "--".$separator."--";*/
+		//$message = $wordwrap($message, 70);
+		/*mail("Rickie_Chandra@hotmail.com.com","test","message");
+
+		$mail = mail($to, $subject,$message,null);
+		if($mail){
+  			echo "Thank you for using our mail form";
+		}else{
+  			echo "Mail sending failed."; 
+		}
+		*/
+		//mail($to, $subject, "", $headers);
+		//$this->session->sess_destroy();
+		//$this->load->view("viewThanks");
 
 	}
 
@@ -282,19 +312,31 @@ class Controller extends CI_Controller {
 		if(!empty($data['transac'])){
 			$data['departSum']=$this->modeldb->getFlightDetail($data['transac'][0]->departID);
 			$data['returnSum']=$this->modeldb->getFlightDetail($data['transac'][0]->returnID);
-			$data['additionalFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->chargeID);
+			$data['departAddFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->departAddFeeID);
+			$data['returnAddFee']=$this->modeldb->getAddFeeDetail($data['transac'][0]->returnAddFeeID);
 			$this->load->view("viewRetrieve",$data);
 		}else{
+		header("refresh:1;url=".URL);
 		echo '<script language="javascript">';
 		echo 'alert("Wrong Booking ID")';	
 		echo '</script>';
-		header( "refresh:5;url=".URL);
 		}
 	}
 	
 
-	function test(){	
-		$this->load->view("viewThanks");
+	function test(){
+	$this->load->library('email');
+
+	$this->email->from('no-reply@UNMC.com.com', 'Admin Name');
+	$this->email->to('Rickie_Chandra@yahoo.com'); 
+
+	$this->email->subject('Email Test');
+	$this->email->message('Testing the email class.');	
+
+	$this->email->send();
+
+echo $this->email->print_debugger();	
+		//mail("Rickie_Chandra@hotmail.com","test","message");echo("asd");
 	}
 		
 	
