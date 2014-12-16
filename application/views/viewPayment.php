@@ -25,7 +25,7 @@
 
 <div class="content"> 
 <div class="container">
-  <h3><b>Summary</b></h3><br/>
+  <h1><b>Summary</b></h1><br/>
   <?php
   $sum=0;
   if(isset($departSum) && !empty($departSum)){
@@ -80,7 +80,7 @@
 
 <div class="container">
 <form name="payment" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/ticket');?>">
-<h3><b>Payment</b></h3>
+<h1><b>Payment</b></h1>
 <table class='table table-hover table-color'>
 <tr><td>Card Type</td>
 <td><input class="form-control" list="relation" placeholder="Click Here" name="cardType"></input></td></tr>
@@ -100,7 +100,9 @@
 <tr><td>Card Issuing Country</td>
 <td><input class="form-control" type="text" placeholder="Card Issuing Country" name="cardCountry"></input></td></tr>
 </table>
+<br/><br/>
 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check(payment)">Send</button>
+<br/><br/><br/>
 </form>
 
 

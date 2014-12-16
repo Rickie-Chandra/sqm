@@ -25,7 +25,7 @@
 <div class="content"> 
 <div class="container">
 <form name="personal" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/selectSeat');?>">
-<h3>Personal Detail</h3>
+<h1><b>Personal Detail</b></h1>
 <table class='table table-hover table-color'>
 <tr><td>Name</td>
 <td><input class="form-control" type="text" placeholder="e.g. Leonardo Thecaprio" name="name"></input></td></tr>

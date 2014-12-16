@@ -13,7 +13,7 @@
 
 <div class="content"> 
 <div class="container">
-<h3><b>Your Ticket</b></h3><br/>
+<h1><b>Ticket Information</b></h1><br/>
   <?php
   if(isset($departSum) && !empty($departSum)){
     echo "<h4>Departure</h4>";

@@ -23,7 +23,7 @@
 
 <div class="content"> 
 <br /><br />
-
+<h1><b> Flight Option </b></h1> 
 <div class="container">
 
 <div id="sidebar">
@@ -44,14 +44,14 @@
 			$seat = $departSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."A'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'></label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."B'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."C'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'></label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."D'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -74,14 +74,14 @@
 			$seat = $returnSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."A'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'></label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."B'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."C'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'></label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."D'></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -91,7 +91,7 @@
   
   </div>
   
-  <br /><br /><br />
+  
 <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
 <br /><br /><br />
 </form>
@@ -104,23 +104,20 @@
 </body>
 <?php include('js.php');?>
 
-<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script><!-- 제이쿼리 --> 
 <script type="text/javascript"> 
 //<![CDATA[ 
 $(function(){ 
-   $('.check input').attr("checkide",false);
-   $('.check input').click(function(){ //when click
-      var test = $(this).attr("checkide"); //whether it is checked or not 
-      if(test == "false"){ //if its not checked
-         $(this).attr("checkide",true); //add
-         $(this).parent().addClass('on'); 
-      } 
-      if(test == "true"){ //if its checked 
-         $(this).attr("checkide",false); 
-         $(this).parent().removeClass('on'); 
-      } 
+   $('.check input').click(function(){// 클릭시 
+      $('.check input').attr("checkide",false); //모든 input을 체크해제 
+      $('.check input').parent().removeClass('on'); // 모든 on 클레스 없에기 
+      $(this).attr("checkide",true); //현재 선택한 녀석을 체크 
+      $(this).parent().addClass('on'); // 현재 선택한 녀석의 부모(label)에게 on클레스 
+   }); 
+   $('.check input').each(function(){//현재있는 모든 input 들 중 
+      $('.check input[disabled]').parent().css("background",'blue'); //disabled 속성이 있는 녀석 의 부모만 파란색 배경 주기 
    }); 
 }); 
 //]]> 
-</script>
+</script> 
 </html>
