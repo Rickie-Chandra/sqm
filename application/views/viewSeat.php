@@ -103,10 +103,8 @@
 
 </body>
 <?php include('js.php');?>
-
-<script type="text/javascript" src="jquery-1.11.0.min.js"></script><!-- 제이쿼리 --> 
 <script type="text/javascript"> 
-//<![CDATA[ 
+<?php /* Delete this line to uncomment your jquery
 $(function(){ 
    $('.check input').click(function(){// 클릭시 
       $('.check input').attr("checkide",false); //모든 input을 체크해제 
@@ -119,5 +117,6 @@ $(function(){
    }); 
 }); 
 //]]> 
-</script> 
+Delete this line to uncomment your jquery*/?>
+</script>
 </html>

@@ -36,7 +36,7 @@
       echo "<td>".$row->craftID."</td>";
       echo "<td>".$row->departTime."</td>";
       echo "<td>".$row->arriveTime."</td>";
-      echo "<td><input type='radio' name='departFlight' value='".$row->flightID."'> RM ".$row->fee."</td></tr>";
+      echo "<td><input type='radio' id='departFlight' name='departFlight' value='".$row->flightID."'> RM ".$row->fee."</td></tr>";
     }
     echo "</table>";
   } else{
@@ -61,13 +61,13 @@
       echo "<td>".$row->craftID."</td>";
       echo "<td>".$row->departTime."</td>";
       echo "<td>".$row->arriveTime."</td>";
-      echo "<td><input type='radio' name='returnFlight' value='".$row->flightID."'>RM ".$row->fee."</td></tr>";
+      echo "<td><input type='radio' id='returnFlight' name='returnFlight' value='".$row->flightID."'>RM ".$row->fee."</td></tr>";
     }
     echo "</table>";
   }
 } 
   ?>
- <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+ <button class="btn btn-lg btn-primary btn-block" type="button" onClick="check(flight)">Send</button>
  <br/><br/><br/>
 </form>
 
@@ -78,4 +78,15 @@
 </div>
 </body>
 <?php include('js.php');?>
+<script>
+  function check(form) {
+    if (form.departFlight.value.length<1<?php if (isset($return) || !empty($return)) {echo " || form.returnFlight.value.length<1";}?>){
+      alert("Please choose your flight");
+      }
+      else {
+      form.submit();
+      }
+    }
+
+</script>
 </html>
