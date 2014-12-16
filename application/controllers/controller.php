@@ -329,11 +329,17 @@ class Controller extends CI_Controller {
 			echo 'alert("Cancelation Success")';	
 			echo '</script>';
 			}
+			else{
+			header("refresh:1;url=".URL);
+			echo '<script language="javascript">';
+			echo 'alert("Wrong IC/Passport Number")';	
+			echo '</script>';
+			}
 
 		}else{
 			header("refresh:1;url=".URL);
 			echo '<script language="javascript">';
-			echo 'alert("Wrong IC/Passport Number")';	
+			echo 'alert("IC/Passport Number is too short")';	
 			echo '</script>';
 
 		}
