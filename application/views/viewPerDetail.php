@@ -7,6 +7,12 @@
 
 </head>
 <body>
+<?php include('menu.php');?>
+
+<center>
+
+
+
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation" class="active"><a>Passenger Profile</a></li>
@@ -15,6 +21,8 @@
 </ul>
 
 <center>
+
+<div class="content"> 
 <div class="container">
 <form name="personal" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/selectSeat');?>">
 <h3>Personal Detail</h3>
@@ -62,11 +70,11 @@
 </table>
 </form>
 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="check(personal)">Send</button>
-
+<br/><br/><br/>
 </div>
 
 </center>
-
+</div>
 </body>
 <?php include('js.php');?>
 <script>

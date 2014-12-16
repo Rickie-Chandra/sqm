@@ -15,8 +15,8 @@
         <div class="navbar-collapse collapse" id="navbar-collapse-menu">
 
         <ul class="nav navbar-nav">
-            <li><img src="<?php echo IMG.'logo.png';?>"style="text-align:right;"></li>
-  			<li><a href="<?php echo(URL.'index.php/controller/index')?>">Home</a></li>
+            <li><a href="<?php echo(URL.'index.php/controller/index')?>"><img src="<?php echo IMG.'logo.png';?>"style="text-align:right;"></a></li>
+
 		</ul>
         <ul class="nav navbar-nav navbar-right">
             <form class="navbar-form navbar-left" role="form" method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/retrieve')?>">

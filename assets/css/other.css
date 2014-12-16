@@ -4,26 +4,84 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  background-image:url("http://192.168.0.101/o1/assets/img/background.png");
  */
-h1,h2,h3,h4,h5,h6,a {
-    color: #25383C;
-    font-family: "Georgia", "Times New Roman";
+h2,h3,h4,h5,h6,a,p{
+		color: #25383C;
+		font-family :"서울남산 장체EB";
 }
 
+h1{
+
+		color:#fff;
+		font-family :"서울남산 장체EB";
+ }
+
 body {
-	color: #25383C;
-	background-image:url("../img/background.png");		
+		color: #25383C;
+		background-image:url("../img/background.png");		
 	}
 
 table {
-	color: #2C3539;
+		color: #2C3539;
 }
 
 th {
-	color:#FFFFCC;
-	background-color: #585858;
+		color:#FFFFCC;
+		background-color: #585858;
 }
 
 .table-hover tbody tr:hover td {
-    background: #585858;
-    color:#FFFFCC;
+		background: #585858;
+		color:#FFFFCC;
 }
+
+#wrapper {
+		background:#1b1464;
+		border-radius:15px;
+		box-shadow: 0px 0px 10px 0px #888888;
+		margin:40px;
+}
+#content {
+		width:1030px;
+		padding:20px;
+		margin:40px;
+		float:left;
+		border-top: 2px solid #8e8e8e;
+		background:#fff;
+		border-radius:15px;
+		box-shadow: 0px 0px 10px 0px #888888;
+	}
+	
+#sidebar {
+
+		width:300px;
+		padding:20px;
+		float:left;
+		border-top: 2px solid #8e8e8e;
+		background:#fff;
+		border-radius:15px;
+		box-shadow: 0px 0px 10px 0px #888888;
+	}	
+
+div.content {
+
+		width:1200px;
+		margin:0 auto;
+		background:#fff} 
+}
+
+
+/*공통*/ 
+.ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
+.hidden {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;display:block} 
+.blind{width:0;height:0;font-size:0;line-height:0;text-indent:-9999px;overflow:hidden;visibility:hidden} 
+.clearfix:after {content:"";display:block;clear:both} 
+.check label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
+.check label.on{background:red} /* 클릭시 빨간색으로 변경 */ 
+
+.menu{width:300px;height:44px;background:#e7e7e7}  
+.menu > ul{position:absolute}  
+.menu > ul > li{float:left}  
+.menu > ul > li > a{display:block;padding:15px 10px;text-align:center}  
+.menu > ul > li > ul{display:none;position:absolute;top:44px}  
+.menu > ul > li:hover > ul{display:block} /* 마우스 오버시 보이기 */ 
+.menu > ul > li > ul:hover{display:block}  

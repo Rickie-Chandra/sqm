@@ -7,6 +7,11 @@
 
 </head>
 <body>
+
+<?php include('menu.php');?>
+
+<center>
+
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation"><a>Passenger Profile</a></li>
@@ -16,13 +21,17 @@
 
 <center>
 
+<div class="content"> 
 <br /><br />
-<div class="container">
-<form name="seat" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/payment');?>">
 
+<div class="container">
+
+<div id="sidebar">
+<form name="seat" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/payment');?>">
+<div class="check"> 
   <?php 
   if(!empty($departCapacity)){
-    echo "<h3> Departure Seat Selection</h3>";
+    echo "<h3> Seat Map</h3>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th> A </th><th> B </th><th>   </th>
           <th> C </th><th> D </th></tr>";
@@ -35,14 +44,14 @@
 			$seat = $departSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='departSeat' value='".$i."A'>".$i."A</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."A'></label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='departSeat' value='".$i."B'>".$i."B</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='departSeat' value='".$i."C'>".$i."C</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."C'></label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='departSeat' value='".$i."D'>".$i."D</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='departSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -65,27 +74,53 @@
 			$seat = $returnSelected[$j];}	
 		}
 		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='returnSeat' value='".$i."A'>".$i."A</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."A'></label></td>";}
 		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='returnSeat' value='".$i."B'>".$i."B</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
 		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='returnSeat' value='".$i."C'>".$i."C</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."C'></label></td>";}
 		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><input type='radio' name='returnSeat' value='".$i."D'>".$i."D</td>";}
+		else{echo "<td><label for='A1'><input type='radio' id='A1' name='returnSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
 }
   ?>
+  </div> 
+  
+  </div>
+  
+  <br /><br /><br />
 <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+<br /><br /><br />
 </form>
 
 
 </div>
-
+</div>
 </center>
 
 </body>
 <?php include('js.php');?>
+
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script><!-- 제이쿼리 --> 
+<script type="text/javascript"> 
+//<![CDATA[ 
+$(function(){ 
+   $('.check input').attr("checkide",false); // 시작시 input 체크속성 false 지정.(체크안됨 지정) 
+   $('.check input').click(function(){ //클릭시 
+      var test = $(this).attr("checkide"); //클릭한 녀석의 체크 유무를 갈라 
+      if(test == "false"){ //체크가 안되있을시 
+         $(this).attr("checkide",true); //추가 
+         $(this).parent().addClass('on'); 
+      } 
+      if(test == "true"){ //체크가 되어있을시  
+         $(this).attr("checkide",false); 
+         $(this).parent().removeClass('on'); 
+      } 
+   }); 
+}); 
+//]]> 
+</script>
 </html>

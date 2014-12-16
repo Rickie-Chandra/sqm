@@ -10,8 +10,8 @@
 <?php include('menu.php');?>
 
 <center>
-<br /><br />
 
+<div class="content"> 
 <div class="container">
 <h3><b>Your Ticket</b></h3><br/>
   <?php
@@ -57,7 +57,7 @@
   ?>
 </div>
 </center>
-
+</div>
 </body>
 <?php include('js.php');?>
 <?php //include("footer.php");?>

@@ -7,6 +7,13 @@
 
 </head>
 <body>
+<?php include('menu.php');?>
+
+<center>
+
+
+
+
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation"><a>Passenger Profile</a></li>
@@ -15,6 +22,8 @@
 </ul>
 
 <center>
+
+<div class="content"> 
 <div class="container">
   <h3><b>Summary</b></h3><br/>
   <?php
@@ -96,7 +105,7 @@
 
 
 </div>
-
+</div>
 </center>
 
 </body>

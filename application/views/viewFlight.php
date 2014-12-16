@@ -7,6 +7,10 @@
 
 </head>
 <body>
+<?php include('menu.php');?>
+
+<center>
+
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">Flight</a></li>
   <li role="presentation"><a href="#">Passenger Profile</a></li>
@@ -15,7 +19,7 @@
 </ul>
 
 <center>
-
+<div class="content"> 
 <br /><br />
 <h3>Departure</h3>
 <div class="container">
@@ -64,13 +68,14 @@
 } 
   ?>
  <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+ <br/><br/><br/>
 </form>
 
 
 </div>
 
 </center>
-
+</div>
 </body>
 <?php include('js.php');?>
 </html>
