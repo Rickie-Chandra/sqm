@@ -104,18 +104,18 @@
 </body>
 <?php include('js.php');?>
 
-<script type="text/javascript" src="jquery-1.11.0.min.js"></script><!-- 제이쿼리 --> 
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
 <script type="text/javascript"> 
 //<![CDATA[ 
 $(function(){ 
-   $('.check input').attr("checkide",false); // 시작시 input 체크속성 false 지정.(체크안됨 지정) 
-   $('.check input').click(function(){ //클릭시 
-      var test = $(this).attr("checkide"); //클릭한 녀석의 체크 유무를 갈라 
-      if(test == "false"){ //체크가 안되있을시 
-         $(this).attr("checkide",true); //추가 
+   $('.check input').attr("checkide",false);
+   $('.check input').click(function(){ //when click
+      var test = $(this).attr("checkide"); //whether it is checked or not 
+      if(test == "false"){ //if its not checked
+         $(this).attr("checkide",true); //add
          $(this).parent().addClass('on'); 
       } 
-      if(test == "true"){ //체크가 되어있을시  
+      if(test == "true"){ //if its checked 
          $(this).attr("checkide",false); 
          $(this).parent().removeClass('on'); 
       } 

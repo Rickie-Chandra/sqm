@@ -70,18 +70,11 @@ div.content {
 }
 
 
-/*공통*/ 
 .ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
 .hidden {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;display:block} 
 .blind{width:0;height:0;font-size:0;line-height:0;text-indent:-9999px;overflow:hidden;visibility:hidden} 
 .clearfix:after {content:"";display:block;clear:both} 
 .check label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
-.check label.on{background:red} /* 클릭시 빨간색으로 변경 */ 
-
-.menu{width:300px;height:44px;background:#e7e7e7}  
-.menu > ul{position:absolute}  
-.menu > ul > li{float:left}  
-.menu > ul > li > a{display:block;padding:15px 10px;text-align:center}  
-.menu > ul > li > ul{display:none;position:absolute;top:44px}  
-.menu > ul > li:hover > ul{display:block} /* 마우스 오버시 보이기 */ 
-.menu > ul > li > ul:hover{display:block}  
+.check label.on{background:red} /* change to red when click */ 
+.check label input{position:absolute;top:-999px;left:-999px}  /* delete thi line to see radio button */ 
+  
