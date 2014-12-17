@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2014 at 08:12 AM
+-- Generation Time: Dec 17, 2014 at 06:25 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -142,17 +142,14 @@ CREATE TABLE IF NOT EXISTS `passenger` (
   `emergencyPhone` varchar(255) NOT NULL,
   `departSeat` varchar(5) DEFAULT NULL,
   `returnSeat` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `passenger`
 --
 
 INSERT INTO `passenger` (`passID`, `name`, `DOB`, `icPass`, `email`, `phone`, `address`, `emergencyName`, `emergencyRelation`, `emergencyPhone`, `departSeat`, `returnSeat`) VALUES
-(1, 'Rickie', '2014-12-12', '123', 'Rickie_Chandra@yahoo.com', 'asd', 'asd', 'asd', 'asd', 'asd', '7A', '3B'),
-(2, 'Rickie 2', '2014-12-20', 'asd', 'Rickie_Chandra@yahoo.com', '123', 'add', 'eName', 'Husband / Wife', '123', '3B', '2A'),
-(3, 'Rickie', '2014-12-05', 'asd', 'Rickie_Chandra@yahoo.com', 'asd', 'asd', 'asd', 'asd', 'asd', '3C', '2B'),
-(4, 'a', '2014-12-11', 'a', 'a', 'a', 'a', 'a', 'a', 'a', '1A', NULL);
+(1, 'a', '2014-12-12', 'a', 'a', 'a', 'a', 'a', 'Brother / Sister', 'a', '1D', '1D');
 
 -- --------------------------------------------------------
 
@@ -168,17 +165,14 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `expDate` date NOT NULL,
   `cwcid` varchar(255) NOT NULL,
   `cardCountry` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
 INSERT INTO `payment` (`payID`, `cardType`, `cardNum`, `cardHold`, `expDate`, `cwcid`, `cardCountry`) VALUES
-(1, 'Paypal', 'asd', 'asdHolder', '2014-12-20', 'asd', 'asd'),
-(2, 'VISA', 'asd', 'asd', '2014-12-19', 'asd', 'asd'),
-(3, 'Master', 'asd', 'asd', '2014-12-20', 'asd', 'asd'),
-(4, 'VISA', 'a', 'a', '2014-12-13', 'a', 'a');
+(1, 'VISA', 'a', 'a', '2014-12-18', 'cw', 'ind');
 
 -- --------------------------------------------------------
 
@@ -217,7 +211,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `departID` varchar(10) NOT NULL,
   `returnID` varchar(10) NOT NULL,
   `passID` varchar(10) NOT NULL,
-  `chargeID` varchar(10) DEFAULT NULL,
+  `departAddFeeID` varchar(11) DEFAULT NULL,
+  `returnAddFeeID` varchar(10) DEFAULT NULL,
   `payID` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -225,11 +220,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`bookingID`, `bookDate`, `departID`, `returnID`, `passID`, `chargeID`, `payID`) VALUES
-('1', '2014-12-12', '3', '8', '1', 'C2', 1),
-('2', '2014-12-12', '3', '8', '2', 'C2', 2),
-('3', '2014-12-12', '3', '8', '3', 'C4', 3),
-('4', '2014-12-12', '3', '0', '4', '0', 4);
+INSERT INTO `transaction` (`bookingID`, `bookDate`, `departID`, `returnID`, `passID`, `departAddFeeID`, `returnAddFeeID`, `payID`) VALUES
+('1', '2014-12-16', '3', '8', '1', '0', '0', 1);
 
 --
 -- Indexes for dumped tables
@@ -296,12 +288,12 @@ MODIFY `flightID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT for table `passenger`
 --
 ALTER TABLE `passenger`
-MODIFY `passID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `passID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-MODIFY `payID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `payID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
