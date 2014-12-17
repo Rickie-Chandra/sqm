@@ -95,4 +95,7 @@ div.content {
 .check label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
 .check label.on{background:red} /* change to red when click */ 
 .check label input{position:absolute;top:-999px;left:-999px}  /* delete thi line to see radio button */ 
+.check2 label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
+.check2 label.on{background:red} /* change to red when click */ 
+.check2 label input{position:absolute;top:-999px;left:-999px}  /* delete thi line to see radio button */ 
   

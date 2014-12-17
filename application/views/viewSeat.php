@@ -53,20 +53,20 @@
 		}
 		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
 		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'></label></td>";}
-		if($seat == $i."B"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'></label></td>";}
+		if($seat == $i."B"){echo "<td><label for='B".$i."'><input type='radio' id='B".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='B".$i."'><input type='radio' id='B".$i."' name='departSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
-		if($seat == $i."C"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'></label></td>";}
-		if($seat == $i."D"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'></label></td>";}
+		if($seat == $i."C"){echo "<td><label for='C".$i."'><input type='radio' id='C".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='C".$i."'><input type='radio' id='C".$i."' name='departSeat' value='".$i."C'></label></td>";}
+		if($seat == $i."D"){echo "<td><label for='D".$i."'><input type='radio' id='D".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='D".$i."'><input type='radio' id='D".$i."' name='departSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
 }
   ?>
 </div>
-<div class="check">   
+<div class="check2">   
   <?php 
   if(!empty($returnCapacity)){
     echo "<h3> Flight from destination</h3>";
@@ -81,15 +81,15 @@
 		||$returnSelected[$j]==$i.'C' || $returnSelected[$j]==$i.'D'){
 			$seat = $returnSelected[$j];}	
 		}
-		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'></label></td>";}
-		if($seat == $i."B"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'></label></td>";}
+		if($seat == $i."A"){echo "<td><label for='E".$i."'><input type='radio' id='E".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='E".$i."'><input type='radio' id='E".$i."' name='returnSeat' value='".$i."A'></label></td>";}
+		if($seat == $i."B"){echo "<td><label for='F".$i."'><input type='radio' id='F".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='F".$i."'><input type='radio' id='F".$i."' name='returnSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
-		if($seat == $i."C"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'></label></td>";}
-		if($seat == $i."D"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'></label></td>";}
+		if($seat == $i."C"){echo "<td><label for='G".$i."'><input type='radio' id='G".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='G".$i."'><input type='radio' id='G".$i."' name='returnSeat' value='".$i."C'></label></td>";}
+		if($seat == $i."D"){echo "<td><label for='H".$i."'><input type='radio' id='H".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='H".$i."'><input type='radio' id='H".$i."' name='returnSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -100,7 +100,7 @@
   </div>
   
   
-<button class="btn btn-lg btn-primary btn-block" onClick="checkRadioButton('departSeat')">Send</button>
+<button class="btn btn-lg btn-primary btn-block" type="button" onClick="check(seat)">Send</button>
 <br/><br/>
 </form>
 
@@ -108,25 +108,47 @@
 </div>
 </div>
 </center>
-
 </body>
 <?php include('js.php');?>
 
-<script type="text/javascript"> 
-//<![CDATA[ 
+<script>
 $(function(){ 
-   $('.check input').click(function(){// when clicked
-      $('.check input').attr("checkide",false); //all input discheck 
-      $('.check input').parent().removeClass('on'); // remove all on class
-      $(this).attr("checkide",true); //check the selected one
-      $(this).parent().addClass('on'); //on class to selected one's label
+   $('.check input').attr("checkide",false); 
+   $('.check input').click(function(){ 
+      $('.check input').attr("checkide",false); 
+      $('.check input').parent().removeClass('on'); 
+      $(this).attr("checkide",true); 
+      $(this).parent().addClass('on'); 
    }); 
-   $('.check input').each(function(){//all inputs
-      $('.check input[disabled]').parent().css("background",'#0e3f9f'); //disabled = blue
+   $('.check input').each(function(){ 
+      $('.check input[disabled]').parent().css("background",'#0e3f9f'); 
    }); 
-}); 
-//]]> 
 
-</script> 
+}); 
+$(function(){ 
+   $('.check2 input').attr("checkide",false); 
+   $('.check2 input').click(function(){ 
+      $('.check2 input').attr("checkide",false); 
+      $('.check2 input').parent().removeClass('on'); 
+      $(this).attr("checkide",true); 
+      $(this).parent().addClass('on'); 
+   }); 
+   $('.check2 input').each(function(){ 
+      $('.check2 input[disabled]').parent().css("background",'#0e3f9f'); 
+   }); 
+
+}); 
+ 
+
+  function check(form) {
+    if (form.departSeat.value.length<1<?php if (isset($return) || !empty($return)) {echo " || form.returnSeat.value.length<1";}?>){
+      alert("Please choose your seat");
+      }
+      else {
+      form.submit();
+      }
+    }
+
+</script>
 
 </html>
