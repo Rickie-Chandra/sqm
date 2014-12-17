@@ -47,6 +47,7 @@ class Controller extends CI_Controller {
 
 	//It is responsible to get some information to find un-selected seat, load view of select seat page, store personal details and additional cost (if any) to session.	
 	function selectSeat(){
+		$this->load->library('session');
 		$this->load->model("modeldb");
 		if(!empty($this->modeldb->getLastID("passenger","passID")[0])){
 			$passID = $this->modeldb->getLastID("passenger","passID")[0]->passID+1;
@@ -65,7 +66,6 @@ class Controller extends CI_Controller {
 			'emergencyRelation'=> $_POST["emergencyRelation"],
 			'emergencyPhone'=> $_POST["emergencyPhone"]
 			);
-		$this->load->library('session');
 		$this->session->set_userdata($newPass);
 		if(isset($_POST["departAddFee"]) || !empty($_POST["departAddFee"])){
 			$this->session->set_userdata('departAddFee',$_POST["departAddFee"]);
@@ -163,7 +163,6 @@ class Controller extends CI_Controller {
 		}else{
 			$transacID = 1;
 		}
-
 		$this->session->set_userdata('transacID',$transacID);
 		$temp = array(
 			'bookingID'=> $transacID,
@@ -177,7 +176,6 @@ class Controller extends CI_Controller {
 			);
 		$this->modeldb->setNewTransac($temp);
 		$this->load->view("viewThanks");
-
 	}
 
 	// It is responsible to create a ticket and show ticket in pdf anditionally by the end it will destroy the session
@@ -255,7 +253,7 @@ class Controller extends CI_Controller {
 			}
 		}
 		$pdf->output();
-		//$this->session->sess_destroy();
+		$this->session->sess_destroy();
 	}
 
 	// It is responsible to show summary in manage booking and load view page of manage booking
@@ -309,7 +307,6 @@ class Controller extends CI_Controller {
 			echo '</script>';
 
 		}
-
 	}
 
 }
