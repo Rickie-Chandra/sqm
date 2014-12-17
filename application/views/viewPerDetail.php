@@ -56,32 +56,34 @@
 <tr><td>Phone</td>
 <td><input class="form-control" type="text" placeholder="e.g. +620113687265" name="emergencyPhone"></input></td></tr>
 </table>
-<h1><b>Depart flight Add on</b></h1>
-<table class='table table-hover table-color'>
-<tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
-<?php 
-    foreach ($result as $index => $row){
+<?php
+if(isset($departFlight) && !empty($departFlight)){
+  echo "<h1><b>Depart Flight Add on</b></h1>";
+  echo "<table class='table table-hover table-color'>";
+  echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>";
+  foreach ($result as $index => $row){
       echo "<tr><td>".$row->chargeID."</td>";
       echo "<td>".$row->title."</td>";
       echo "<td>".$row->description."</td>";
       echo "<td><input type='radio' name='departAddFee' value='".$row->chargeID."'> ".$row->fee."</td></tr>";
     }
-?>
-</table>
-<h1><b>Return flight Add on</b></h1>
-<table class='table table-hover table-color'>
-<tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
-<?php 
-    foreach ($result as $index => $row){
+  echo "</table>";
+}if(isset($returnFlight) && !empty($returnFlight)){
+  echo "<h1><b>Return Flight Add on</b></h1>";
+  echo "<table class='table table-hover table-color'>";
+  echo "<tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>";
+  foreach ($result as $index => $row){
       echo "<tr><td>".$row->chargeID."</td>";
       echo "<td>".$row->title."</td>";
       echo "<td>".$row->description."</td>";
       echo "<td><input type='radio' name='returnAddFee' value='".$row->chargeID."'> ".$row->fee."</td></tr>";
     }
+  echo "</table>";
+}
+//echo "<button class='btn btn-lg btn-primary btn-block' type='button' onclick='check(personal)'>Send</button>";
 ?>
-</table>
 </form>
-<button class="btn btn-lg btn-primary btn-block" type="button" onclick="check(personal)">Send</button>
+<button class='btn btn-lg btn-primary btn-block' type='button' onclick='check(personal)'>Send</button>
 <br/><br/><br/>
 </div>
 

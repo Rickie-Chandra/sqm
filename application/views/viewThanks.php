@@ -27,11 +27,10 @@
 
     <div id="content">
       <h3>Thank you</h3>
-        <p>Please check your email's inbox / spam for your e-ticket,<br/>we will send it within 5 minutes</p>
-        <a href=<?php echo URL;?>>Click here to go back to home page.</a>
-        <?php
-        header( "refresh:8;url=".URL);
-        ?>
+        <p><a href=<?php echo URL."index.php/controller/showTicket";?>>Click this to see your e-ticket, Ticket</a></p>
+
+
+        <p><a href=<?php echo URL;?>>Click here to go back to home page.</a></p>
     </div>  
 </div>
 </center>

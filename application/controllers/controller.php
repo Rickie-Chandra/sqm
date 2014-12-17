@@ -18,7 +18,6 @@ class Controller extends CI_Controller {
 		$from = $_POST["from"];
 		$to = $_POST["to"];
 		$this->load->model("modeldb");
-
 		if(!isset($_POST["returnDate"]) || empty($_POST["returnDate"])){
 			$data['result'] = $this->modeldb->getFlight($departDate, substr($from, -3), substr($to, -3));
 			$this->load->view("viewFlight", $data);
@@ -36,8 +35,10 @@ class Controller extends CI_Controller {
 	function personalDetails(){
 		$this->load->library('session');
 		$this->session->set_userdata('departFlight',$_POST["departFlight"]);
+		$data['departFlight'] = $_POST["departFlight"];
 		if(isset($_POST["returnFlight"]) || !empty($_POST["returnFlight"])){
 			$this->session->set_userdata('returnFlight',$_POST["returnFlight"]);
+			$data['returnFlight'] = $_POST["returnFlight"];
 		}
 		$this->load->model("modeldb");
 		$data['result'] = $this->modeldb->getAddCost();
@@ -75,11 +76,11 @@ class Controller extends CI_Controller {
 		}
 		
 		if(!empty($this->session->userdata('departFlight'))){
-		$data['departSelected'] = $this->modeldb->getSelected($this->session->userdata('departFlight'),1);
+		$data['departSelected'] = $this->modeldb->getSelected($this->session->userdata('departFlight'));
 		$data['departCapacity'] = $this->modeldb->getCapacity($this->session->userdata('departFlight'));
 		}
 		if(!empty($this->session->userdata('returnFlight'))){
-		$data['returnSelected'] = $this->modeldb->getSelected($this->session->userdata('returnFlight'),2);
+		$data['returnSelected'] = $this->modeldb->getSelected($this->session->userdata('returnFlight'));
 		$data['returnCapacity'] = $this->modeldb->getCapacity($this->session->userdata('returnFlight'));
 		}
 		
@@ -115,12 +116,10 @@ class Controller extends CI_Controller {
 		$this->load->view("viewPayment",$data);	
 	}
 	
-	//It is responsible to store all session’s data into database, create a ticket and destroy the session.
+	//It is responsible to store all session’s data into database and load view of thanks page
 	function ticket(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
-
-		/*Store data to database*/
 		$temp = array (
 			'passID' => $this->session->userdata('passID'),
 			'name'=> $this->session->userdata('name'),
@@ -164,6 +163,8 @@ class Controller extends CI_Controller {
 		}else{
 			$transacID = 1;
 		}
+
+		$this->session->set_userdata('transacID',$transacID);
 		$temp = array(
 			'bookingID'=> $transacID,
 			'bookDate'=> date("Y-m-d"),
@@ -175,8 +176,14 @@ class Controller extends CI_Controller {
 			'payID'=> $payID
 			);
 		$this->modeldb->setNewTransac($temp);
+		$this->load->view("viewThanks");
 
-		//Create PDF
+	}
+
+	// It is responsible to create a ticket and show ticket in pdf anditionally by the end it will destroy the session
+	function showTicket(){
+		$this->load->model("modeldb");
+		$this->load->library('session');
 		include (APPPATH.'libraries/fpdf/fpdf.php');
 		$pdf_filename = tempnam(APPPATH."temp", "pdf");
 		$pdf = new FPDF();
@@ -191,7 +198,7 @@ class Controller extends CI_Controller {
 		$pdf->Cell(50,10,"IC/Passport :",1,0);
 		$pdf->Cell(120,10,$this->session->userdata('icPass'),1,1);
 		$pdf->Cell(50,10,"Booking ID :",1,0);
-		$pdf->Cell(120,10,$transacID,1,1);
+		$pdf->Cell(120,10,$this->session->userdata('transacID'),1,1);
 		$pdf->Cell(50,10,"Passenger ID :",1,0);
 		$pdf->Cell(120,10,$this->session->userdata('passID'),1,1);
 		if(!empty($this->session->userdata('departFlight'))){
@@ -248,53 +255,10 @@ class Controller extends CI_Controller {
 			}
 		}
 		$pdf->output();
-		//$pdf->Output($filename,'F');
-		echo '<a href="quote.png" target="_blank">View the image</a>';
-
-
-		//Send to customer's Email
-		$to = $this->session->userdata('email');
-		echo $to."<br/>";
-		$from = "no-reply@UNMC.com"; 
-		$subject = "UNMC Airline E-Ticket"; 
-		$message = "Hello Mr/Ms <br/><p>Please see the attachment.</p>";
-		$separator = md5(time());
-		$eol = PHP_EOL;
-		$filename = "e-ticket for ".$this->session->userdata('name').".pdf";
-		$pdfdoc = $pdf->Output("", "S");
-		$attachment = chunk_split(base64_encode($pdfdoc));
-		/*
-		$headers  = "From: ".$from.$eol;
-		$headers .= "MIME-Version: 1.0".$eol; 
-		$headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"".$eol.$eol; 
-		$headers .= "Content-Transfer-Encoding: 7bit".$eol;
-		$headers .= "This is a MIME encoded message.".$eol.$eol;
-		$headers .= "--".$separator.$eol;
-		$headers .= "Content-Type: text/html; charset=\"iso-8859-1\"".$eol;
-		$headers .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
-		$headers .= $message.$eol.$eol;
-		$headers .= "--".$separator.$eol;
-		$headers .= "Content-Type: application/octet-stream; name=\"".$filename."\"".$eol; 
-		$headers .= "Content-Transfer-Encoding: base64".$eol;
-		$headers .= "Content-Disposition: attachment".$eol.$eol;
-		$headers .= $attachment.$eol.$eol;
-		$headers .= "--".$separator."--";*/
-		//$message = $wordwrap($message, 70);
-		/*mail("Rickie_Chandra@hotmail.com.com","test","message");
-
-		$mail = mail($to, $subject,$message,null);
-		if($mail){
-  			echo "Thank you for using our mail form";
-		}else{
-  			echo "Mail sending failed."; 
-		}
-		*/
-		//mail($to, $subject, "", $headers);
 		//$this->session->sess_destroy();
-		//$this->load->view("viewThanks");
-
 	}
 
+	// It is responsible to show summary in manage booking and load view page of manage booking
 	function retrieve(){
 		$this->load->library('session');
 		$this->session->sess_destroy();
@@ -314,8 +278,10 @@ class Controller extends CI_Controller {
 		echo 'alert("Wrong Booking ID")';	
 		echo '</script>';
 		}
+		
 	}
 
+	// It is responsible for cancel function in manage booking
 	function cancel(){
 		$this->load->library('session');
 		$this->session->sess_destroy();
@@ -343,23 +309,7 @@ class Controller extends CI_Controller {
 			echo '</script>';
 
 		}
+
 	}
-	
 
-	function test(){
-	$this->load->library('email');
-
-	$this->email->from('no-reply@UNMC.com.com', 'Admin Name');
-	$this->email->to('Rickie_Chandra@yahoo.com'); 
-
-	$this->email->subject('Email Test');
-	$this->email->message('Testing the email class.');	
-
-	$this->email->send();
-
-echo $this->email->print_debugger();	
-		//mail("Rickie_Chandra@hotmail.com","test","message");echo("asd");
-	}
-		
-	
 }
