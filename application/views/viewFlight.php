@@ -11,6 +11,7 @@
 
 <center>
 
+<div class="content"> 
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="#">Flight</a></li>
   <li role="presentation"><a href="#">Passenger Profile</a></li>
@@ -19,9 +20,8 @@
 </ul>
 
 <center>
-<div class="content"> 
 <br /><br />
-<h3>Departure</h3>
+<h1><b>Departure</b></h1>
 <div class="container">
 <form name="flight" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/personalDetails');?>">
 
@@ -48,10 +48,10 @@
   <?php 
   if (isset($return) || !empty($return)) {
     if(!is_array($return)){
-      echo "<h3>Return</h3>";
+      echo "<h1><b>Return</b></h1>";
       echo "Sorry, No Flight";
     } elseif(!empty($return)){
-      echo "<h3>Return</h3>";
+      echo "<h1><b>Return</b></h1>";
       echo "<h4>".$return[0]->flightDate."<br/><br/>".$return[0]->from." -> ".$return[0]->to."</h4>";
       echo "<table class='table table-hover table-color'>";
       echo "<tr> <th>Flight ID</th> <th>Aircraft ID</th> <th>Departure Time</th>

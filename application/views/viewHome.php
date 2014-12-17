@@ -22,7 +22,7 @@
   <div class="row">
   <br />
     <div class="col-md-4">
-    <h1><b>Online Reservation</b></h1>	
+    <h1><font color="white"><b>Online Reservation</b></h1>	
 
 <div id="content">
     <div class="btn-group">

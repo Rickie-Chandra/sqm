@@ -13,6 +13,7 @@
 
 
 
+<div class="content"> 
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation" class="active"><a>Passenger Profile</a></li>
@@ -22,10 +23,9 @@
 
 <center>
 
-<div class="content"> 
 <div class="container">
 <form name="personal" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/selectSeat');?>">
-<h2><b>Personal Detail</b></h2>
+<h1><b>Traveller Detail</b></h1>
 <table class='table table-hover table-color'>
 <tr><td>Name</td>
 <td><input class="form-control" type="text" placeholder="e.g. Leonardo Thecaprio" name="name"></input></td></tr>
@@ -40,7 +40,7 @@
 <tr><td>Address</td>
 <td><input class="form-control" type="text" placeholder="e.g. abcd street no 38, Kuala Lumpur, Indonesia" name="address"></input></td></tr>
 </table>
-<h3>Emergency</h3>
+<h1><b>Emergency</b></h1>
 <table class='table table-hover table-color'>
 <tr><td>Name</td>
 <td><input class="form-control" type="text" placeholder="Full Name" name="emergencyName"></input></td></tr>
@@ -56,7 +56,7 @@
 <tr><td>Phone</td>
 <td><input class="form-control" type="text" placeholder="e.g. +620113687265" name="emergencyPhone"></input></td></tr>
 </table>
-<h3>Depart Additional Cost</h3>
+<h1><b>Depart flight Add on</b></h1>
 <table class='table table-hover table-color'>
 <tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
 <?php 
@@ -68,7 +68,7 @@
     }
 ?>
 </table>
-<h3>Return Additional Cost</h3>
+<h1><b>Return flight Add on</b></h1>
 <table class='table table-hover table-color'>
 <tr><th>Charge ID</th> <th>Title</th> <th>Description</th> <th>Cost</th></tr>
 <?php 

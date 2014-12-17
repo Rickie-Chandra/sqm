@@ -4,6 +4,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  background-image:url("http://192.168.0.101/o1/assets/img/background.png");
  */
+
+
+ 
 h2,h3,h4,h5,h6,a,p{
 		color: #25383C;
 		font-family :"서울남산 장체EB";
@@ -11,7 +14,7 @@ h2,h3,h4,h5,h6,a,p{
 
 h1{
 
-		color:#fff;
+		color:#04378b;
 		font-family :"서울남산 장체EB";
  }
 
@@ -40,21 +43,36 @@ th {
 		box-shadow: 0px 0px 10px 0px #888888;
 		margin:40px;
 }
-#content {
-		width:1030px;
-		padding:20px;
-		margin:40px;
-		float:left;
-		border-top: 2px solid #8e8e8e;
+#wrap{
 		background:#fff;
 		border-radius:15px;
 		box-shadow: 0px 0px 10px 0px #888888;
+		margin:40px;
+}
+#content {
+		width:1024px;
+		padding:20px;
+		margin:40px;
+		float:left;
+		background:#fff;
+		border-radius:15px;
+		box-shadow: 0px 0px 10px 0px #888888;
+
+	}
+#content2 {
+		width:600px;
+		padding:20px;
+		margin:40px;
+		float:left;
+		background:#fff;
+
 	}
 	
 #sidebar {
 
 		width:300px;
 		padding:20px;
+		margin:40px;
 		float:left;
 		border-top: 2px solid #8e8e8e;
 		background:#fff;
@@ -70,11 +88,11 @@ div.content {
 }
 
 
-/*.ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
+.ellipsis {display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis} 
 .hidden {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;display:block} 
 .blind{width:0;height:0;font-size:0;line-height:0;text-indent:-9999px;overflow:hidden;visibility:hidden} 
 .clearfix:after {content:"";display:block;clear:both} 
 .check label{display:block;position:relative;width:40px;height:20px;background:#9ecfcf;overflow:hidden} 
 .check label.on{background:red} /* change to red when click */ 
-/*.check label input{position:absolute;top:-999px;left:-999px}   delete thi line to see radio button */ 
+.check label input{position:absolute;top:-999px;left:-999px}  /* delete thi line to see radio button */ 
   

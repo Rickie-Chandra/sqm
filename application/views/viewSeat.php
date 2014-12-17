@@ -12,6 +12,7 @@
 
 <center>
 
+<div class="content"> 
 <ul class="nav nav-tabs">
   <li role="presentation"><a>Flight</a></li>
   <li role="presentation"><a>Passenger Profile</a></li>
@@ -21,17 +22,24 @@
 
 <center>
 
-<div class="content"> 
 <br /><br />
 <h1><b> Flight Option </b></h1> 
 <div class="container">
-
+<div id="wrap" >
+			<div id="content2">
+			<img src="<?php echo IMG.'logo.png';?>"style="text-align:right;"><br /><br /><br />
+			<p><font size="5">Please select your seat by clicking on it. <br />Please select your sit for return, <br />if you have any return flight.
+			</p>
+			<br /><br />
+			<img src="<?php echo IMG.'sit.jpg';?>"style="text-align:right;">
+			</div>
 <div id="sidebar">
 <form name="seat" class="form-signin" role="form"method="POST" enctype="multipart/form-data" action="<?php echo(URL.'index.php/controller/payment');?>">
 <div class="check"> 
   <?php 
   if(!empty($departCapacity)){
-    echo "<h3> Seat Map</h3>";
+    echo "<h2> Seat Map</h2>";
+    echo "<h3> Flight from origin</h3>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th> A </th><th> B </th><th>   </th>
           <th> C </th><th> D </th></tr>";
@@ -43,25 +51,25 @@
 		||$departSelected[$j]==$i.'C' || $departSelected[$j]==$i.'D'){
 			$seat = $departSelected[$j];}	
 		}
-		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'>".$i."</label></td>";}
-		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'>".$i."</label></td>";}
+		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'></label></td>";}
+		if($seat == $i."B"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
-		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'>".$i."</label></td>";}
-		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'>".$i."</label></td>";}
+		if($seat == $i."C"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."C'></label></td>";}
+		if($seat == $i."D"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
 }
   ?>
-
-  
+</div>
+<div class="check">   
   <?php 
   if(!empty($returnCapacity)){
-    echo "<h3> Return Seat Selection</h3>";
+    echo "<h3> Flight from destination</h3>";
     echo "<table class='table table-hover table-color'>";
     echo "<tr><th> A </th><th> B </th><th>   </th>
           <th> C </th><th> D </th></tr>";
@@ -73,15 +81,15 @@
 		||$returnSelected[$j]==$i.'C' || $returnSelected[$j]==$i.'D'){
 			$seat = $returnSelected[$j];}	
 		}
-		if($seat == $i."A"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'>".$i."</label></td>";}
-		if($seat == $i."B"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'>".$i."</label></td>";}
+		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A'></label></td>";}
+		if($seat == $i."B"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
-		if($seat == $i."C"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'>".$i."</label></td>";}
-		if($seat == $i."D"){echo "<td>n/a</td>";}
-		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'>".$i."</label></td>";}
+		if($seat == $i."C"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."C'></label></td>";}
+		if($seat == $i."D"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
@@ -92,29 +100,33 @@
   </div>
   
   
-<button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
-<br /><br /><br />
+<button class="btn btn-lg btn-primary btn-block" onClick="checkRadioButton('departSeat')">Send</button>
+<br/><br/>
 </form>
 
-
+</div>
 </div>
 </div>
 </center>
 
 </body>
 <?php include('js.php');?>
+
 <script type="text/javascript"> 
+//<![CDATA[ 
 $(function(){ 
-   $('.check input').click(function(){// 클릭시 
-      $('.check input').attr("checkide",false); //모든 input을 체크해제 
-      $('.check input').parent().removeClass('on'); // 모든 on 클레스 없에기 
-      $(this).attr("checkide",true); //현재 선택한 녀석을 체크 
-      $(this).parent().addClass('on'); // 현재 선택한 녀석의 부모(label)에게 on클레스 
+   $('.check input').click(function(){// when clicked
+      $('.check input').attr("checkide",false); //all input discheck 
+      $('.check input').parent().removeClass('on'); // remove all on class
+      $(this).attr("checkide",true); //check the selected one
+      $(this).parent().addClass('on'); //on class to selected one's label
    }); 
-   $('.check input').each(function(){//현재있는 모든 input 들 중 
-      $('.check input[disabled]').parent().css("background",'blue'); //disabled 속성이 있는 녀석 의 부모만 파란색 배경 주기 
+   $('.check input').each(function(){//all inputs
+      $('.check input[disabled]').parent().css("background",'#0e3f9f'); //disabled = blue
    }); 
 }); 
 //]]> 
-</script>
+
+</script> 
+
 </html>
