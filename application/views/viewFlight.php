@@ -90,31 +90,5 @@
             form.submit();
           }
         }
-    
-
-
-    /*if (a == true && b == true) {
-      if(form.departFlight.value.length<1 || form.returnFlight.value.length<1){alert('Please choose your flight');}
-      else{form.submit};
-    }else if (a==true) {
-      if(form.departFlight.value.length<1){alert('Please choose your departure flight');}
-      else{form.submit};
-    } else if (b==true) {
-      if(form.returnFlight.value.length<1){alert('Please choose your return flight');}
-      else{form.submit};
-    }*/
-
-
-    /*if (typeof a !== 'undefined' && typeof b !== 'undefined') {
-      if(form.departFlight.value.length<1 || form.returnFlight.value.length<1){alert('Please choose your flight');}
-      else{form.submit};
-    }else if (typeof a !== 'undefined') {
-      if(form.departFlight.value.length<1){alert('Please choose your departure flight');}
-      else{form.submit};
-    } if (typeof b !== 'undefined') {
-      if(form.departFlight.value.length<1){alert('Please choose your return flight');}
-      else{form.submit};
-    }*/
-
 </script>
 </html>

@@ -4,6 +4,7 @@
 	<title>Personal Details</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php include('css.php');?>
+  <link rel="stylesheet" href ="<?php echo(CSS.'jquery-ui.css')?>">
 
 </head>
 <body>
@@ -30,7 +31,7 @@
 <tr><td>Name</td>
 <td><input class="form-control" type="text" placeholder="e.g. Leonardo Thecaprio" name="name"></input></td></tr>
 <tr><td>Date of Birth</td>
-<td><input class="form-control" type="date" placeholder="e.g 08/08/88" name="DOB"></input></td></tr>
+<td><input class="form-control" type="text" id="datepicker" placeholder="e.g 08/08/1988" name="DOB"></input></td></tr>
 <tr><td>IC / Passport</td>
 <td><input class="form-control" type="text" placeholder="e.g. A21321332" name="icPass"></input></td></tr>
 <tr><td>Email</td>
@@ -91,6 +92,16 @@ if(isset($departFlight) && !empty($departFlight)){
 </div>
 </body>
 <?php include('js.php');?>
+<script src="<?php echo(JS.'jquery-ui.js')?>"></script>
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+</script>
 <script>
         function check(form) {
             if (form.name.value == "" || form.DOB.value == "" || form.icPass.value == "" || form.email.value == "" 

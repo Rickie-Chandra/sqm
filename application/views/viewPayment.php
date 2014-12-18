@@ -4,6 +4,7 @@
 	<title>Payment</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php include('css.php');?>
+  <link rel="stylesheet" href ="<?php echo(CSS.'jquery-ui.css')?>">
 
 </head>
 <body>
@@ -103,7 +104,7 @@
 <tr><td>Card Holder Name</td>
 <td><input class="form-control" type="text" placeholder="Card Holder Name" name="cardHold"></input></td></tr>
 <tr><td>Expiration Date</td>
-<td><input class="form-control"  type="date" placeholder="Expiration Date" name="expDate"></input></td></tr>
+<td><input class="form-control"  type="text" id="datepicker" placeholder="Expiration Date" name="expDate"></input></td></tr>
 <tr><td>CW/CID Number</td>
 <td><input class="form-control" type="text" placeholder="CW/CID Number" name="cwcid"></input></td></tr>
 <tr><td>Card Issuing Country</td>
@@ -121,6 +122,16 @@
 
 </body>
 <?php include('js.php');?>
+<script src="<?php echo(JS.'jquery-ui.js')?>"></script>
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+</script>
 <script>
         function check(form) {
             if (form.cardType.value == "" || form.cardNum.value == "" || form.cardHold.value == "" 

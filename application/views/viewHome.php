@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
 	<title>Home</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <?php include('css.php');?>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include('css.php');?>
+    <link rel="stylesheet" href ="<?php echo(CSS.'jquery-ui.css')?>">
 </head>
 
 <body>
-
 <?php include('menu.php');?>
-
 <div class="content"> 
  
 <center>
@@ -37,17 +35,15 @@
 			<td>
 			<h2> Origin : </h2>
 			</td>    
-				<td>
-                <input class="form-control" list="airport" placeholder="Origin" name="from"></input>
+			<td><input class="form-control" list="airport" placeholder="Origin" name="from"></input>
                 <datalist id="airport">
                     <?php
                     foreach ($result as $index => $row){
                     echo "<option value='".$row->name."'>";}
                     ?>
                 </datalist>
-                </td> 
-			<td><input class="form-control"  type="date" placeholder="Departure Date" name="departDate"></input></td>
-
+            </td> 
+            <td><input class="form-control" type="text" id="departDate" placeholder="Arrival date" name="departDate"></input></td>
 			</tr>
 
 			<tr>
@@ -55,8 +51,7 @@
 			<h2> Destination : </h2>
 			</td>
 			<td><input class="form-control" list="airport" type="text" placeholder="Destination" name="to"></input></td>
-				
-			<td><input class="form-control" type="date" placeholder="Arrival date" name="returnDate" id="returnDate"></input></td>
+			<td><input class="form-control" type="text" id="returnDate" placeholder="Return date" name="returnDate"></input></td>
 			</tr>
         </table>
         <br/>
@@ -80,12 +75,29 @@
 <br/><br/><br/>
 
 </div>
+
 </body>
 
 <?php include('js.php');?>
-<?php //include("footer.php");?>
-
+<script src="<?php echo(JS.'jquery-ui.js')?>"></script>
 <script>
+  $(function() {
+    $( "#departDate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+  $(function() {
+    $( "#returnDate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+</script>
+
+<script type="text/javascript">
         function check(form) {
             if ((form.to.value == "" || form.from.value == "" || form.departDate.value == ""))
                 {

@@ -313,4 +313,10 @@ class Controller extends CI_Controller {
 		}
 	}
 
+	function test(){
+		$this->load->view("datepicker");
+		//datepicker.html
+	}
+
+
 }
