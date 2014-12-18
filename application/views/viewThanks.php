@@ -23,7 +23,7 @@
   <div class="row">
   <br />
     <div class="col-md-4">
-    <h1><b>Success!!</b></h1>  
+    <h1><b><font color="white">Success!!</font></b></h1>  
 
     <div id="content">
       <h3>Thank you</h3>

@@ -51,18 +51,21 @@
 		||$departSelected[$j]==$i.'C' || $departSelected[$j]==$i.'D'){
 			$seat = $departSelected[$j];}	
 		}
-		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		if($seat == $i."A"){echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A' disabled></label></td>";}
 		else{echo "<td><label for='A".$i."'><input type='radio' id='A".$i."' name='departSeat' value='".$i."A'></label></td>";}
-		if($seat == $i."B"){echo "<td><label for='B".$i."'><input type='radio' id='B".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		if($seat == $i."B"){echo "<td><label for='B".$i."'><input type='radio' id='B".$i."' name='departSeat' value='".$i."A' disabled></label></td>";}
 		else{echo "<td><label for='B".$i."'><input type='radio' id='B".$i."' name='departSeat' value='".$i."B'></label></td>";}
 		echo "<td></td>";
-		if($seat == $i."C"){echo "<td><label for='C".$i."'><input type='radio' id='C".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		if($seat == $i."C"){echo "<td><label for='C".$i."'><input type='radio' id='C".$i."' name='departSeat' value='".$i."A' disabled></label></td>";}
 		else{echo "<td><label for='C".$i."'><input type='radio' id='C".$i."' name='departSeat' value='".$i."C'></label></td>";}
-		if($seat == $i."D"){echo "<td><label for='D".$i."'><input type='radio' id='D".$i."' name='returnSeat' value='".$i."A' disabled></label></td>";}
+		if($seat == $i."D"){echo "<td><label for='D".$i."'><input type='radio' id='D".$i."' name='departSeat' value='".$i."A' disabled></label></td>";}
 		else{echo "<td><label for='D".$i."'><input type='radio' id='D".$i."' name='departSeat' value='".$i."D'></label></td>";}
 	echo "</tr>";
 	}
     echo "</table>";
+}else{
+    echo "<input type='hidden' name='departSeat' value='FALSE'>";
+
 }
   ?>
 </div>
@@ -93,12 +96,13 @@
 	echo "</tr>";
 	}
     echo "</table>";
+} else{
+    echo "<input type='hidden' name='returnSeat' value='FALSE'>";
+
 }
-  ?>
-  </div> 
-  
+?>
+  </div>   
   </div>
-  
   
 <button class="btn btn-lg btn-primary btn-block" type="button" onClick="check(seat)">Send</button>
 <br/><br/>
@@ -138,10 +142,11 @@ $(function(){
    }); 
 
 }); 
+</script>
  
-
+<script type="text/javascript">
   function check(form) {
-    if (form.departSeat.value.length<1<?php if (isset($return) || !empty($return)) {echo " || form.returnSeat.value.length<1";}?>){
+    if (form.departSeat.value.length<1 || form.returnSeat.value.length<1){
       alert("Please choose your seat");
       }
       else {

@@ -34,9 +34,13 @@ class Controller extends CI_Controller {
 	//It is responsible to load view of personal details page, additional cost option from database and store the chosen flight into session.
 	function personalDetails(){
 		$this->load->library('session');
-		$this->session->set_userdata('departFlight',$_POST["departFlight"]);
-		$data['departFlight'] = $_POST["departFlight"];
-		if(isset($_POST["returnFlight"]) || !empty($_POST["returnFlight"])){
+
+		if(isset($_POST["departFlight"]) && $_POST["departFlight"] != "FALSE"){
+			$this->session->set_userdata('departFlight',$_POST["departFlight"]);
+			$data['departFlight'] = $_POST["departFlight"];
+		}
+		
+		if(isset($_POST["returnFlight"]) && $_POST["returnFlight"] != "FALSE"){
 			$this->session->set_userdata('returnFlight',$_POST["returnFlight"]);
 			$data['returnFlight'] = $_POST["returnFlight"];
 		}
@@ -91,10 +95,10 @@ class Controller extends CI_Controller {
 	function payment(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
-			if(isset($_POST["departSeat"]) || !empty($_POST["departSeat"])){
+			if(isset($_POST["departSeat"]) && $_POST["departSeat"] != "FALSE"){
 				$this->session->set_userdata('departSeat',$_POST["departSeat"]);
 			}
-			if(isset($_POST["returnSeat"]) || !empty($_POST["returnSeat"])){
+			if(isset($_POST["returnSeat"]) && $_POST["returnSeat"] != "FALSE"){
 				$this->session->set_userdata('returnSeat',$_POST["returnSeat"]);
 			}
 
@@ -284,7 +288,7 @@ class Controller extends CI_Controller {
 		$this->load->library('session');
 		$this->session->sess_destroy();
 		$this->load->model("modeldb");
-		if(strlen($_POST["icPass"])>3){
+		if(strlen($_POST["icPass"])>1){
 			$data['transac']=$this->modeldb->getTransacDetail($_POST['bookingID']);
 			if($this->modeldb->getPassDetail($data['transac'][0]->passID)[0]->icPass==$_POST["icPass"]){
 				$this->modeldb->cancelTicket($_POST['bookingID'], $data['transac'][0]->passID, $data['transac'][0]->payID);
