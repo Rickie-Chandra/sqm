@@ -35,6 +35,10 @@ class Controller extends CI_Controller {
 	function personalDetails(){
 		$this->load->library('session');
 
+		if(!isset($_POST["departFlight"]) && !isset($_POST["returnFlight"])){
+			$this->index();
+		}else{
+
 		if(isset($_POST["departFlight"]) && $_POST["departFlight"] != "FALSE"){
 			$this->session->set_userdata('departFlight',$_POST["departFlight"]);
 			$data['departFlight'] = $_POST["departFlight"];
@@ -47,12 +51,17 @@ class Controller extends CI_Controller {
 		$this->load->model("modeldb");
 		$data['result'] = $this->modeldb->getAddCost();
 		$this->load->view("viewPerDetail",$data);
+		}
 	}
 
 	//It is responsible to get some information to find un-selected seat, load view of select seat page, store personal details and additional cost (if any) to session.	
 	function selectSeat(){
 		$this->load->library('session');
 		$this->load->model("modeldb");
+		if(!isset($_POST["departAddFee"]) && !isset($_POST["returnAddFee"])){
+			$this->index();
+		}else{
+
 		if(!empty($this->modeldb->getLastID("passenger","passID")[0])){
 			$passID = $this->modeldb->getLastID("passenger","passID")[0]->passID+1;
 		}else{
@@ -88,13 +97,17 @@ class Controller extends CI_Controller {
 		$data['returnCapacity'] = $this->modeldb->getCapacity($this->session->userdata('returnFlight'));
 		}
 		
-		$this->load->view("viewSeat",$data);		
+		$this->load->view("viewSeat",$data);
+		}		
 	}
 
 	//It is responsible to store the selected seat into session, get some information to for summary and load view of payment page.
 	function payment(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
+		if(!isset($_POST["departSeat"]) && !isset($_POST["returnSeat"])){
+			$this->index();
+		}else{
 			if(isset($_POST["departSeat"]) && $_POST["departSeat"] != "FALSE"){
 				$this->session->set_userdata('departSeat',$_POST["departSeat"]);
 			}
@@ -118,12 +131,16 @@ class Controller extends CI_Controller {
 			}
 			
 		$this->load->view("viewPayment",$data);	
+		}
 	}
 	
 	//It is responsible to store all session’s data into database and load view of thanks page
 	function ticket(){
 		$this->load->model("modeldb");
 		$this->load->library('session');
+		if(!isset($_POST["cardNum"]) && !isset($_POST["cardHold"])){
+			$this->index();
+		}else{
 		$temp = array (
 			'passID' => $this->session->userdata('passID'),
 			'name'=> $this->session->userdata('name'),
@@ -180,6 +197,7 @@ class Controller extends CI_Controller {
 			);
 		$this->modeldb->setNewTransac($temp);
 		$this->load->view("viewThanks");
+		}
 	}
 
 	// It is responsible to create a ticket and show ticket in pdf anditionally by the end it will destroy the session
@@ -312,11 +330,10 @@ class Controller extends CI_Controller {
 
 		}
 	}
-
+/* Just For testing
 	function test(){
 		$this->load->view("datepicker");
-		//datepicker.html
 	}
-
+*/
 
 }

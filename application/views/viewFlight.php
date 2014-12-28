@@ -66,8 +66,11 @@
       echo "<td><input type='radio' id='returnFlight' name='returnFlight' value='".$row->flightID."'>RM ".$row->fee."</td></tr>";
     }
     echo "</table>";
+    }
+  }else{
+    //echo "asdsadasdSorry, No flight";
+    echo "<input type='hidden' id='departFlight' name='returnFlight' value='FALSE'>";
   }
-} 
   ?>
  <button class="btn btn-lg btn-primary btn-block" type="button" onClick="check(flight)">Send</button>
  <br/><br/><br/>
